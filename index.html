@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
+<meta name="build" content="2026.08.25-1645">
+<!-- B2Fleet prototype · build 2026.08.25-1645 -->
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>B2Fleet — marketplace and content studio prototype</title>
 <meta name="description" content="Clickable prototype of the B2Fleet B2B car rental marketplace and its admin content studio.">
@@ -363,158 +365,188 @@ h1,h2,h3,h4{margin:0;letter-spacing:-.025em;font-weight:800;line-height:1.1}
 }
 </style>
 <style>
-/* ============ STUDIO SHELL ============ */
-.studio{display:grid;grid-template-columns:246px 1fr;min-height:100dvh;background:var(--surface)}
-.studio.collapsed{grid-template-columns:66px 1fr}
-.s-side{background:var(--navy);color:#AFC4DE;display:flex;flex-direction:column;position:sticky;top:0;height:100dvh;overflow:hidden}
-.s-brand{padding:16px 16px 12px;display:flex;align-items:center;gap:10px}
-.s-brand .tag{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;background:rgba(255,255,255,.14);
-  color:#fff;padding:3px 6px;border-radius:4px}
-.s-nav{flex:1;overflow-y:auto;padding:6px 10px 16px}
-.nav-tools{padding:4px 8px 8px;margin-bottom:2px;border-bottom:1px solid rgba(255,255,255,.08)}
-.switch.mini{font-size:11.5px;color:#8FA8C6;font-weight:600}
-.switch.mini i{width:28px;height:16px;border-radius:8px}
-.switch.mini i::after{width:12px;height:12px}
-.switch.mini input:checked + i::after{transform:translateX(12px)}
+/* =======================================================================
+   STUDIO — operations-console styling
+   Top navigation with drop-down menus, toolbar strips, dense record tables.
+   ======================================================================= */
+.studio{min-height:100dvh;background:#EEF1F8;display:flex;flex-direction:column}
 
-.s-group{margin-top:12px;border-radius:8px}
-.s-group.over{box-shadow:inset 0 2px 0 var(--blue)}
-.s-group.dragging{opacity:.45}
-.s-group-h{display:flex;align-items:center;padding-right:4px}
-.s-group-h .ghead{flex:1;display:flex;align-items:center;gap:6px;background:none;border:0;padding:5px 6px 5px 8px;
-  color:#5D7A9E;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;text-align:left;cursor:pointer}
-.s-group-h .ghead:hover{color:#9DB6D4}
-.s-group-h .chev{display:flex;transition:transform .16s}
-.s-group.closed .chev{transform:rotate(-90deg)}
-.s-group-h .adot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex:none}
-.s-group-h .gcount{background:rgba(255,255,255,.1);border-radius:9px;padding:1px 6px;font-size:9.5px;letter-spacing:0}
-.s-group-h .gmove{display:flex;gap:1px;opacity:0;transition:opacity .15s}
-.s-group-h:hover .gmove,.s-group-h:focus-within .gmove{opacity:1}
-@media (hover:none){.s-group-h .gmove{opacity:1}}
-.s-group-h .gmove button{background:none;border:0;color:#5D7A9E;padding:3px;border-radius:4px;display:grid;place-items:center;cursor:grab}
-.s-group-h .gmove button:hover:not([disabled]){color:#fff;background:rgba(255,255,255,.1)}
-.s-group-h .gmove button[disabled]{opacity:.25;cursor:default}
-.s-group.closed .s-group-items{display:none}
-.s-nav button{width:100%;display:flex;align-items:center;gap:11px;background:none;border:0;color:#C2D4EA;
-  padding:9px 10px;border-radius:8px;font-weight:600;font-size:14px;text-align:left;white-space:nowrap;min-width:0}
-.s-nav button .lbl{overflow:hidden;text-overflow:ellipsis;min-width:0}
-.s-nav button:hover{background:rgba(255,255,255,.07);color:#fff}
-.s-nav button.on{background:var(--blue);color:#fff}
-.s-nav button .ic{flex:none;width:18px;display:grid;place-items:center}
-.s-nav button .soon{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.06em;color:#6E8CB2;border:1px solid #33507A;padding:1px 4px;border-radius:4px}
-.studio.collapsed .s-nav button span.lbl,.studio.collapsed .s-group-h,.studio.collapsed .nav-tools,
-.studio.collapsed .s-brand .txt,.studio.collapsed .s-nav .soon{display:none}
-.studio.collapsed .s-group.closed .s-group-items{display:block}
-.studio.collapsed .s-group{margin-top:6px}
-.studio.collapsed .s-nav button{justify-content:center;padding:10px 0}
-.s-foot{padding:12px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px;font-size:12.5px}
-.s-foot .who{min-width:0}
-.s-foot .who b{display:block;color:#fff;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.avatar{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;flex:none}
+/* ---------- top navigation ---------- */
+.tn{background:#fff;border-bottom:1px solid #E4E9F2;position:sticky;top:0;z-index:60}
+.tn-in{display:flex;align-items:center;gap:4px;padding:0 18px;height:54px}
+.tn-brand{display:flex;align-items:center;gap:9px;margin-right:18px;flex:none}
+.build{font-size:10px;font-weight:700;color:#A8B1C4;letter-spacing:.04em;font-family:ui-monospace,monospace}
+.tn-brand .tag{font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  background:#EDF1F9;color:#5A6B8C;padding:3px 6px;border-radius:4px}
+.tn-menu{display:flex;align-items:center;gap:2px;min-width:0}
+.tn-item{position:relative}
+.tn-btn{background:none;border:0;padding:7px 13px;border-radius:6px;font-size:14px;font-weight:500;
+  color:#6B7794;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tn-btn:hover{color:#2E3A59;background:#F5F7FC}
+.tn-btn.on{background:#EEF1F8;color:#2E3A59;font-weight:600}
+.tn-btn .caret{opacity:.5;display:flex}
+.tn-count{background:#E8EDF7;color:#5A6B8C;border-radius:10px;padding:0 6px;font-size:11px;font-weight:700}
 
-.s-main{min-width:0;display:flex;flex-direction:column}
-.s-top{background:#fff;border-bottom:1px solid var(--line);padding:12px 22px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:30;flex-wrap:wrap}
-.s-top h1{font-size:19px}
-.s-top .crumb{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:2px}
-.s-top .acts{margin-left:auto;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
-.icon-btn{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:grid;place-items:center;color:var(--muted)}
-.icon-btn:hover{color:var(--ink);border-color:#C9D6E6}
-.s-body{padding:22px;flex:1;min-width:0}
-.save-dot{font-size:12.5px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:7px}
-.save-dot i{width:8px;height:8px;border-radius:50%;background:#C6D2E2;display:block}
+.tn-drop{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid #E4E9F2;
+  border-radius:8px;box-shadow:0 12px 34px rgba(29,42,68,.16);min-width:238px;padding:6px;z-index:70}
+.tn-drop-h{display:flex;align-items:center;gap:4px;padding:6px 8px 7px;border-bottom:1px solid #F0F3F9;margin-bottom:4px}
+.tn-drop-h b{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#9AA3B5;flex:1;font-weight:800}
+.tn-drop-h button{background:none;border:0;color:#B4BDCE;padding:3px;border-radius:4px;display:grid;place-items:center}
+.tn-drop-h button:hover:not([disabled]){color:#2E3A59;background:#F1F4FA}
+.tn-drop-h button[disabled]{opacity:.3}
+.tn-drop button.tn-link{display:flex;align-items:center;gap:10px;width:100%;padding:8px 9px;border-radius:6px;
+  font-size:13.5px;color:#46536F;background:none;border:0;text-align:left;font-weight:500}
+.tn-drop button.tn-link:hover{background:#F3F6FC;color:#1F2C49}
+.tn-drop button.tn-link.on{background:var(--blue);color:#fff}
+.tn-drop .dot{width:5px;height:5px;border-radius:50%;background:#C3CBDA;flex:none}
+.tn-drop button.tn-link.on .dot{background:#fff}
+.tn-drop .soon{margin-left:auto;font-size:9px;font-weight:800;letter-spacing:.06em;color:#A8B1C4;
+  border:1px solid #DFE4EE;padding:1px 4px;border-radius:3px}
+.tn-drop-f{border-top:1px solid #F0F3F9;margin-top:4px;padding:8px 9px 4px}
+
+.tn-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex:none}
+.tn-user{display:flex;align-items:center;gap:9px;padding-left:12px;border-left:1px solid #E9EDF5}
+.tn-user .who{text-align:right;line-height:1.25}
+.tn-user .who small{display:block;font-size:11px;color:#9AA3B5}
+.tn-user .who b{font-size:12.5px;color:#2E3A59;font-weight:700}
+.avatar{width:30px;height:30px;border-radius:50%;background:#E4E9F2;color:#7A87A3;display:grid;place-items:center;
+  font-weight:800;font-size:11.5px;flex:none}
+.tn-burger{display:none;background:none;border:1px solid #E4E9F2;border-radius:6px;padding:7px 9px;color:#46536F}
+
+.tn-sheet{border-top:1px solid #E4E9F2;background:#fff;max-height:calc(100dvh - 54px);overflow-y:auto;padding:8px 14px 18px}
+.tn-sheet h6{margin:14px 0 5px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#9AA3B5;font-weight:800}
+.tn-sheet button{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:11px 8px;
+  border-radius:7px;font-size:15px;color:#46536F;text-align:left;font-weight:500;border-bottom:1px solid #F4F6FB}
+.tn-sheet button.on{background:var(--blue);color:#fff;border-bottom-color:transparent}
+.tn-sheet .soon{margin-left:auto;font-size:9.5px;font-weight:800;color:#A8B1C4;border:1px solid #DFE4EE;padding:1px 5px;border-radius:3px}
+
+/* ---------- page frame ---------- */
+.s-body{flex:1;padding:20px;max-width:1560px;width:100%;margin:0 auto}
+.save-dot{font-size:12px;font-weight:600;color:#8A93A8;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.save-dot i{width:7px;height:7px;border-radius:50%;background:#C6D2E2;display:block}
 .save-dot.dirty i{background:#E8A317}
 .save-dot.saved i{background:#22A06B}
 
-/* cards + grid */
-.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
-.panel-h{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
-.panel-h h3{font-size:15.5px}
+.toolbar{background:#fff;border:1px solid #E4E9F2;border-radius:7px;padding:10px 12px;margin-bottom:16px;
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;box-shadow:0 1px 2px rgba(29,42,68,.04)}
+.tb-sel{display:flex;align-items:center;gap:6px;background:#F4F6FB;border:1px solid #E7EBF3;border-radius:6px;
+  padding:5px 10px;font-size:12.5px;font-weight:600;color:#46536F}
+.tb-sel select{background:none;border:0;font-weight:600;color:#46536F;font-size:12.5px;padding:0;width:auto}
+.tb-sel select:focus{outline:none;box-shadow:none}
+.tb-search{flex:1;min-width:170px;max-width:420px;margin:0 auto;position:relative}
+.tb-search input{width:100%;background:#F4F6FB;border:1px solid #E7EBF3;border-radius:6px;padding:8px 32px 8px 12px;font-size:13px}
+.tb-search input:focus{background:#fff;border-color:var(--blue);outline:none;box-shadow:0 0 0 3px rgba(31,107,255,.1)}
+.tb-search .ic{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#A8B1C4;pointer-events:none;display:flex}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.tb-page{font-size:12.5px;color:#6B7794;font-weight:600;white-space:nowrap}
+.tb-btn{background:#F4F6FB;border:1px solid #E7EBF3;border-radius:6px;padding:6px 9px;color:#5A6B8C;display:grid;place-items:center}
+.tb-btn:hover:not([disabled]){background:#EAEFF8;color:#2E3A59}
+.tb-btn[disabled]{opacity:.4}
+
+/* ---------- record card ---------- */
+.panel{background:#fff;border:1px solid #E4E9F2;border-radius:7px;box-shadow:0 1px 2px rgba(29,42,68,.04)}
+.panel-h{padding:14px 16px;border-bottom:1px solid #EFF2F8;display:flex;align-items:center;gap:11px;min-height:56px}
+.panel-h h3{font-size:15px;font-weight:600;letter-spacing:-.01em;color:#2E3A59}
 .panel-h .r{margin-left:auto;display:flex;gap:8px;align-items:center}
 .panel-b{padding:16px}
+.add-btn{background:var(--navy);color:#fff;border:0;border-radius:6px;width:34px;height:34px;display:grid;place-items:center;flex:none}
+.add-btn:hover{background:#16406E}
+.rec-count{text-align:right;font-size:12px;color:#9AA3B5;padding:9px 4px 0}
+
+/* ---------- dense table ---------- */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:#9AA3B5;
+  padding:11px 14px;border-bottom:1px solid #EFF2F8;white-space:nowrap;font-weight:600}
+.tbl td{padding:11px 14px;border-bottom:1px solid #F3F5FA;vertical-align:middle;color:#46536F}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tr:hover td{background:#FAFBFE}
+.tbl .thumb{width:58px;height:36px;border-radius:4px;background:#F2F5FA;object-fit:contain;flex:none}
+.tbl .nm{display:flex;align-items:center;gap:10px;min-width:0}
+.tbl .nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#2E3A59;font-weight:600}
+.tbl .nm small{color:#9AA3B5;font-size:11.5px}
+.tbl-scroll{overflow-x:auto}
+.act{display:flex;gap:4px;justify-content:flex-end}
+.act button{background:none;border:0;color:#B4BDCE;padding:6px;border-radius:5px;display:grid;place-items:center}
+.act button:hover:not([disabled]){color:var(--blue);background:#F1F5FD}
+.act button[disabled]{opacity:.35}
+
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:4px;padding:3px 9px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.badge::before{content:"";width:8px;height:8px;border-radius:2px;flex:none}
+.b-live{background:#EAF7F0;color:#1B7F4B}.b-live::before{background:#22A06B}
+.b-draft{background:#FFF4E0;color:#8A5E00}.b-draft::before{background:#E8A317}
+.b-arch{background:#F1F3F8;color:#7A87A3}.b-arch::before{background:#B4BDCE}
+.b-blue{background:#EDF3FE;color:#1B4F9E}.b-blue::before{background:var(--blue)}
+.chip{background:#F2F5FA;border:1px solid #E7EBF3;border-radius:4px;padding:3px 8px;font-size:11.5px;font-weight:600;color:#46536F}
+
+/* ---------- dashboard ---------- */
 .grid{display:grid;gap:16px}
-.g4{grid-template-columns:repeat(4,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g2{grid-template-columns:repeat(2,1fr)}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g-2-1{grid-template-columns:1.6fr 1fr}
+.kpi{background:#fff;border:1px solid #E4E9F2;border-radius:7px;padding:14px 16px;box-shadow:0 1px 2px rgba(29,42,68,.04)}
+.kpi span{font-size:11px;color:#9AA3B5;font-weight:700;display:flex;align-items:center;gap:7px;
+  letter-spacing:.06em;text-transform:uppercase}
+.kpi b{display:block;font-size:27px;letter-spacing:-.035em;margin-top:7px;color:#2E3A59}
+.kpi em{font-style:normal;font-size:12px;color:#8A93A8;font-weight:600}
 
-.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow-sm)}
-.kpi span{font-size:12.5px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:7px}
-.kpi b{display:block;font-size:29px;letter-spacing:-.035em;margin-top:6px}
-.kpi em{font-style:normal;font-size:12px;color:var(--green);font-weight:700}
+.alert{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;border-radius:6px;font-size:13px;line-height:1.45}
+.alert b{display:block;margin-bottom:2px}
+.a-warn{background:#FFF7E8;color:#8A5E00;border:1px solid #F3E3C2}
+.a-info{background:#EFF4FE;color:#1B4F9E;border:1px solid #DAE5FB}
+.a-note{background:#F6F8FC;color:#7A87A3;border:1px solid #EBEFF6}
 
-.alert{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;border-radius:9px;font-size:13.5px;line-height:1.45}
-.alert b{display:block}
-.a-warn{background:var(--amber-bg);color:var(--amber);border:1px solid #F2E2BE}
-.a-info{background:#EDF3FE;color:#1B4F9E;border:1px solid #D3E2FB}
-.a-note{background:#F6F8FC;color:var(--muted);border:1px solid var(--line)}
-
-/* forms */
+/* ---------- forms ---------- */
 .field{margin-bottom:14px}
-.field>label{display:block;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:5px}
-.field .hint{font-size:11.5px;color:var(--muted);font-weight:500;margin-top:4px}
-.inp,.sel,.ta{width:100%;border:1px solid #D6E0EC;border-radius:8px;padding:9px 11px;background:#fff;font-size:14px}
+.field>label{display:block;font-size:12px;font-weight:600;color:#46536F;margin-bottom:5px}
+.field .hint{font-size:11.5px;color:#9AA3B5;font-weight:500;margin-top:4px}
+.inp,.sel,.ta{width:100%;border:1px solid #DCE2EC;border-radius:6px;padding:9px 11px;background:#fff;font-size:13.5px;color:#2E3A59}
 .ta{min-height:78px;resize:vertical;line-height:1.5}
-.inp:focus,.sel:focus,.ta:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px rgba(31,107,255,.14)}
+.inp:focus,.sel:focus,.ta:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px rgba(31,107,255,.12)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.switch{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;cursor:pointer}
+.switch{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;cursor:pointer;color:#46536F}
 .switch input{display:none}
-.switch i{width:38px;height:22px;border-radius:11px;background:#CDD9E7;position:relative;transition:.16s;flex:none}
-.switch i::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.16s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.switch i{width:36px;height:21px;border-radius:11px;background:#CDD9E7;position:relative;transition:.16s;flex:none}
+.switch i::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:.16s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
 .switch input:checked + i{background:var(--blue)}
-.switch input:checked + i::after{transform:translateX(16px)}
+.switch input:checked + i::after{transform:translateX(15px)}
 
-/* tables */
-.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
-.tbl th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
-  padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:800}
-.tbl td{padding:10px 12px;border-bottom:1px solid #EEF2F8;vertical-align:middle}
-.tbl tr:hover td{background:#FAFCFF}
-.tbl .thumb{width:64px;height:40px;border-radius:6px;background:#EDF3FA;object-fit:contain;flex:none}
-.tbl .nm{display:flex;align-items:center;gap:10px;min-width:0}
-.tbl .nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tbl .nm small{color:var(--muted)}
-.badge{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:3px 9px;font-size:11.5px;font-weight:700;white-space:nowrap}
-.b-live{background:var(--green-bg);color:var(--green)}
-.b-draft{background:#FFF3D4;color:#8A5E00}
-.b-arch{background:#EEF2F7;color:var(--muted)}
-.b-blue{background:#E7F0FF;color:var(--blue-d)}
-.tbl-scroll{overflow-x:auto}
-
-/* section list (homepage editor) */
-.seclist{display:grid;gap:9px}
-.secrow{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+/* ---------- homepage section list ---------- */
+.seclist{display:grid;gap:8px}
+.secrow{display:flex;align-items:center;gap:11px;border:1px solid #E7EBF3;border-radius:6px;padding:10px 12px;background:#fff}
 .secrow.dragging{opacity:.4}
 .secrow.over{border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,107,255,.12)}
-.secrow .grip{cursor:grab;color:#A9B9CD;font-size:16px;line-height:1;touch-action:none}
-.secrow .lbl{font-weight:700;font-size:14px}
-.secrow .sub{font-size:12px;color:var(--muted)}
-.secrow .r{margin-left:auto;display:flex;align-items:center;gap:6px}
-.ord{background:#fff;border:1px solid var(--line);border-radius:6px;width:26px;height:26px;display:grid;place-items:center;color:var(--muted);font-size:12px}
-.ord:hover{color:var(--blue);border-color:var(--blue)}
+.secrow .grip{cursor:grab;color:#C3CBDA;font-size:15px;line-height:1;touch-action:none}
+.secrow .lbl{font-weight:600;font-size:13.5px;color:#2E3A59}
+.secrow .sub{font-size:11.5px;color:#9AA3B5}
+.secrow .r{margin-left:auto;display:flex;align-items:center;gap:4px}
+.ord{background:none;border:0;color:#B4BDCE;padding:6px;border-radius:5px;display:grid;place-items:center}
+.ord:hover:not([disabled]){color:var(--blue);background:#F1F5FD}
+.ord[disabled]{opacity:.3}
 
-/* preview frame */
-.prev-bar{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);background:#F8FAFD;flex-wrap:wrap}
-.seg{display:flex;background:#E9EFF7;border-radius:8px;padding:3px}
-.seg button{background:none;border:0;padding:5px 12px;border-radius:6px;font-size:12.5px;font-weight:700;color:var(--muted)}
-.seg button.on{background:#fff;color:var(--navy);box-shadow:var(--shadow-sm)}
+/* ---------- preview ---------- */
+.prev-bar{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid #EFF2F8;background:#FAFBFE;flex-wrap:wrap}
+.seg{display:flex;background:#EDF0F7;border-radius:6px;padding:3px}
+.seg button{background:none;border:0;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:600;color:#7A87A3}
+.seg button.on{background:#fff;color:#2E3A59;box-shadow:0 1px 2px rgba(29,42,68,.1)}
 .prev-stage{background:#E7EDF5;padding:16px;overflow:auto;max-height:70vh}
-.prev-shell{margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:var(--shadow-md);transform-origin:top center}
+.prev-shell{margin:0 auto;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 4px 16px rgba(29,42,68,.12);transform-origin:top center}
 
-/* media library */
-.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:13px}
-.mtile{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;text-align:left;padding:0;position:relative}
+/* ---------- media ---------- */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.mtile{border:1px solid #E7EBF3;border-radius:6px;overflow:hidden;background:#fff;text-align:left;padding:0;position:relative}
 .mtile.on{border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,107,255,.16)}
 .mtile .cap{padding:8px 9px;font-size:11.5px}
-.mtile .cap b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
-.mtile .cap span{color:var(--muted)}
-.mtile .flag{position:absolute;top:7px;right:7px;background:var(--amber-bg);color:var(--amber);border-radius:20px;padding:2px 7px;font-size:10px;font-weight:800}
-.logo-slot{border:1px solid var(--line);border-radius:9px;min-height:74px;display:grid;place-items:center;padding:12px}
-.dropzone{border:2px dashed #C3D3E6;border-radius:12px;padding:22px;text-align:center;color:var(--muted);background:#FAFCFF;font-size:13.5px}
-.dropzone.hot{border-color:var(--blue);background:#F0F6FF;color:var(--blue)}
+.mtile .cap b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:#2E3A59}
+.mtile .cap span{color:#9AA3B5}
+.mtile .flag{position:absolute;top:7px;right:7px;background:#FFF4E0;color:#8A5E00;border-radius:3px;padding:2px 6px;font-size:9.5px;font-weight:800}
+.dropzone{border:2px dashed #CBD5E4;border-radius:7px;padding:20px;text-align:center;color:#8A93A8;background:#FAFBFE;font-size:13px}
+.dropzone.hot{border-color:var(--blue);background:#F1F6FF;color:var(--blue)}
+.logo-slot{border:1px solid #E7EBF3;border-radius:6px;min-height:74px;display:grid;place-items:center;padding:12px}
 
-/* focal editor */
-.focal{position:relative;border-radius:10px;overflow:hidden;background:#0B2545;touch-action:none;cursor:crosshair;user-select:none}
+/* ---------- focal editor ---------- */
+.focal{position:relative;border-radius:6px;overflow:hidden;background:#0B2545;touch-action:none;cursor:crosshair;user-select:none}
 .focal img{width:100%;display:block;pointer-events:none}
 .focal .dot{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:3px solid #fff;
   box-shadow:0 0 0 2px rgba(11,37,69,.5),0 3px 10px rgba(0,0,0,.4);pointer-events:none}
@@ -524,56 +556,140 @@ h1,h2,h3,h4{margin:0;letter-spacing:-.025em;font-weight:800;line-height:1.1}
   linear-gradient(to bottom,transparent 33.33%,rgba(255,255,255,.28) 33.33%,rgba(255,255,255,.28) calc(33.33% + 1px),transparent calc(33.33% + 1px),transparent 66.66%,rgba(255,255,255,.28) 66.66%,rgba(255,255,255,.28) calc(66.66% + 1px),transparent calc(66.66% + 1px))}
 .focal-set{min-width:0}
 .focal-set .crop-lbl{margin-bottom:6px}
-.crops{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:11px}
-.crop-lbl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px;display:flex;justify-content:space-between}
+.crops{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:10px}
+.crop-lbl{font-size:10.5px;font-weight:700;color:#9AA3B5;margin-bottom:4px;display:flex;justify-content:space-between;
+  letter-spacing:.05em;text-transform:uppercase}
 
-/* drawer */
-.scrim{position:fixed;inset:0;background:rgba(11,37,69,.45);z-index:80;backdrop-filter:blur(2px)}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:#fff;z-index:81;display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
-.drawer-h{padding:15px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
-.drawer-h h3{font-size:16px}
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(24,36,60,.42);z-index:80;backdrop-filter:blur(2px)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(580px,100%);background:#fff;z-index:81;display:flex;flex-direction:column;
+  box-shadow:-14px 0 44px rgba(24,36,60,.2)}
+.drawer-h{padding:15px 18px;border-bottom:1px solid #EFF2F8;display:flex;align-items:center;gap:12px}
+.drawer-h h3{font-size:16px;color:#2E3A59}
 .drawer-b{flex:1;overflow-y:auto;padding:18px}
-.drawer-f{padding:13px 18px;border-top:1px solid var(--line);display:flex;gap:9px;align-items:center;background:#FAFCFF}
+.drawer-f{padding:12px 18px;border-top:1px solid #EFF2F8;display:flex;gap:9px;align-items:center;background:#FAFBFE}
 .drawer-f .r{margin-left:auto;display:flex;gap:9px}
-.tabs{display:flex;gap:3px;border-bottom:1px solid var(--line);margin:-4px -18px 16px;padding:0 18px;overflow-x:auto}
-.tabs button{background:none;border:0;padding:10px 12px;font-weight:700;font-size:13.5px;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs{display:flex;gap:3px;border-bottom:1px solid #EFF2F8;margin:-4px -18px 16px;padding:0 18px;overflow-x:auto}
+.tabs button{background:none;border:0;padding:10px 12px;font-weight:600;font-size:13px;color:#8A93A8;border-bottom:2px solid transparent;white-space:nowrap}
 .tabs button.on{color:var(--blue);border-bottom-color:var(--blue)}
 
-/* sign in */
+/* ---------- sign in ---------- */
 .signin{min-height:100dvh;display:grid;place-items:center;padding:24px;
-  background:radial-gradient(1000px 600px at 20% -10%,#164077 0%,transparent 60%),var(--navy)}
-.signin-card{background:#fff;border-radius:16px;box-shadow:var(--shadow-lg);width:min(410px,100%);padding:28px}
-.signin-card h2{font-size:22px;margin-bottom:5px}
-.signin-card p.lead{color:var(--muted);font-size:13.5px;margin:0 0 20px}
+  background:radial-gradient(900px 520px at 18% -10%,#17457E 0%,transparent 60%),var(--navy)}
+.signin-card{background:#fff;border-radius:10px;box-shadow:0 24px 60px rgba(6,20,40,.4);width:min(410px,100%);padding:28px}
+.signin-card h2{font-size:21px;margin-bottom:5px;color:#2E3A59}
+.signin-card p.lead{color:#8A93A8;font-size:13px;margin:0 0 20px}
 .role-pick{display:grid;gap:7px}
-.role-pick label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:10px 12px;cursor:pointer;font-size:13.5px}
-.role-pick label.on{border-color:var(--blue);background:#F4F8FF}
-.role-pick input{margin-top:2px}
-.role-pick b{display:block}
-.role-pick span{color:var(--muted);font-size:12px}
+.role-pick label{display:flex;gap:10px;align-items:flex-start;border:1px solid #E7EBF3;border-radius:6px;padding:10px 12px;cursor:pointer;font-size:13px}
+.role-pick label.on{border-color:var(--blue);background:#F5F9FF}
+.role-pick input{margin-top:2px;accent-color:var(--blue)}
+.role-pick b{display:block;color:#2E3A59}
+.role-pick span{color:#9AA3B5;font-size:11.5px}
 
-/* toast */
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;
-  padding:11px 18px;border-radius:9px;font-weight:600;font-size:13.5px;z-index:200;box-shadow:var(--shadow-lg);max-width:90vw}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1F2C49;color:#fff;
+  padding:11px 18px;border-radius:7px;font-weight:600;font-size:13px;z-index:200;box-shadow:0 12px 34px rgba(24,36,60,.34);max-width:90vw}
+.empty{text-align:center;padding:40px 20px;color:#9AA3B5}
+.empty h3{color:#2E3A59;margin-bottom:7px;font-size:15.5px}
+.empty p{max-width:430px;margin:0 auto;font-size:13px;line-height:1.6}
+.icon-btn{background:#F4F6FB;border:1px solid #E7EBF3;border-radius:6px;padding:7px 9px;display:grid;place-items:center;color:#5A6B8C}
+.icon-btn:hover{color:#2E3A59;background:#EAEFF8}
 
-.empty{text-align:center;padding:40px 20px;color:var(--muted)}
-.empty h3{color:var(--ink);margin-bottom:7px;font-size:16px}
-.empty p{max-width:420px;margin:0 auto;font-size:13.5px;line-height:1.6}
 
+/* ---------- two-level admin menu ---------- */
+.tn-drop.wide{min-width:470px;padding:6px}
+.tn-two{display:grid;grid-template-columns:186px 1fr;gap:6px}
+.tn-col1{border-right:1px solid #F0F3F9;padding-right:6px;display:grid;gap:2px;align-content:start}
+.tn-sec{display:flex;align-items:center;gap:9px;width:100%;background:none;border:0;padding:9px;border-radius:6px;
+  font-size:13.5px;font-weight:600;color:#46536F;text-align:left}
+.tn-sec .caret{margin-left:auto;opacity:.45;display:flex}
+.tn-sec:hover{background:#F3F6FC}
+.tn-sec.on{background:#EEF1F8;color:#1F2C49}
+.tn-col2{display:grid;gap:2px;align-content:start;max-height:340px;overflow-y:auto}
+
+/* ---------- reservations ---------- */
+.res-list{display:grid;gap:12px}
+.rcard{position:relative;background:#fff;border:1px solid #E4E9F2;border-radius:7px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(29,42,68,.04);padding-left:6px}
+.rcard .spine{position:absolute;left:0;top:0;bottom:0;width:5px}
+.rcard-top{display:flex;align-items:flex-start;gap:16px;padding:13px 14px 11px;flex-wrap:wrap}
+.rc-cust{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0;flex:1}
+.rc-cust>b{font-size:15px;color:#2E3A59;letter-spacing:-.01em}
+.rstat{display:inline-flex;align-items:center;gap:6px;border-radius:4px;padding:3px 9px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.rstat i{width:8px;height:8px;border-radius:2px;display:block}
+.rmeta{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:#7A87A3}
+.rc-when{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.whenbox{background:#F6F8FC;border:1px solid #EDF1F7;border-radius:5px;padding:6px 10px;display:grid;gap:2px;min-width:0}
+.whenbox b{font-size:12.5px;color:#2E3A59;display:flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap}
+.whenbox span{font-size:11.5px;color:#8A93A8;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.whenbox.sm{background:none;border:0;padding:0}
+.rc-when .arrow{color:#B4BDCE;display:flex}
+.numbadge{width:40px;height:40px;border-radius:6px;display:grid;place-items:center;font-weight:800;font-size:16px;color:#fff;flex:none}
+.numbadge.t-red{background:#E5484D}.numbadge.t-amber{background:#E8A317}
+.numbadge.t-green{background:#22A06B}.numbadge.t-grey{background:#C3CBDA}
+.rcard-bot{display:flex;align-items:center;gap:18px;padding:10px 14px;border-top:1px solid #F3F5FA;
+  background:#FCFDFF;flex-wrap:wrap}
+.rcode b{display:block;font-size:12.5px;color:#fff;background:#2E3A59;border-radius:4px;padding:3px 8px;letter-spacing:.04em}
+.rcode small{color:#9AA3B5;font-size:11.5px}
+.coop{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#46536F;white-space:nowrap}
+.coop-dot{width:20px;height:20px;border-radius:4px;color:#fff;display:grid;place-items:center;font-size:10.5px;font-weight:800;flex:none}
+.rdays b{display:block;font-size:12.5px;color:#8A93A8;font-weight:600}
+.rdays small{font-size:14px;color:#2E3A59;font-weight:800}
+.rcar{display:flex;align-items:center;gap:9px;min-width:0}
+.rcar img{width:56px;height:34px;object-fit:contain;flex:none}
+.rcar b{display:block;font-size:13px;color:#2E3A59}
+.rcar small{font-size:11.5px;color:#8A93A8}
+.grpbadge{width:26px;height:26px;border-radius:4px;background:#8A6A3B;color:#fff;display:grid;place-items:center;
+  font-weight:800;font-size:12px;flex:none}
+.ract{display:flex;flex-direction:column;font-size:12px;color:#2E3A59;font-weight:600;gap:1px;margin-left:auto}
+.ract small{color:#9AA3B5;font-weight:500}
+.rbrand{flex:none;opacity:.9}
+
+/* ---------- vouchers + messages ---------- */
+.respill{background:#2E3A59;color:#fff;border-radius:4px;padding:3px 9px;font-size:12px;font-weight:700;letter-spacing:.03em}
+.vtype{display:inline-flex;align-items:center;gap:6px;border:1px solid #BFE3CD;background:#F2FBF6;color:#1B7F4B;
+  border-radius:5px;padding:4px 9px;font-size:12px;font-weight:600;white-space:nowrap}
+.vtype.amend{border-color:#D6C9F0;background:#F7F4FD;color:#5B3FA8}
+.vstat{width:26px;height:26px;border-radius:5px;display:grid;place-items:center;font-weight:800;font-size:13px}
+.vstat.ok{background:#22A06B;color:#fff}
+.vstat.wait{background:#E8A317;color:#fff}
+.daysbadge{width:30px;height:28px;border-radius:5px;display:grid;place-items:center;font-weight:700;font-size:13px;color:#fff}
+.daysbadge.t-green{background:#1E9E77}.daysbadge.t-amber{background:#E8A317}.daysbadge.t-grey{background:#DDE3EC;color:#8A93A8}
+.attach{background:#EDF1F9;color:#5A6B8C;border-radius:4px;padding:2px 7px;font-size:10.5px;font-weight:700;margin-left:7px}
+.msg-prev{color:#8A93A8;font-size:12.5px;line-height:1.5;margin-top:3px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- statistics ---------- */
+.tot-pill{background:#2E3A59;color:#fff;border-radius:5px;padding:5px 11px;font-size:12.5px;font-weight:700}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-left:auto;font-size:12px;color:#6B7794;font-weight:600}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:12px;height:12px;border-radius:3px;display:block}
+.month-tbl th,.month-tbl td{padding:9px 10px;font-size:12.5px;white-space:nowrap}
+.month-tbl .tot-cell{background:#F1F4FA;text-align:right;font-weight:800;color:#2E3A59}
+
+/* ---------- config lists ---------- */
+.attr-ic{width:26px;height:26px;border-radius:5px;background:#F2F5FA;color:#5A6B8C;display:grid;place-items:center;flex:none}
+.attrs{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.attrs .am{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#7A87A3;font-weight:600}
+
+@media (max-width:1100px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-2-1{grid-template-columns:1fr}
+}
 @media (max-width:900px){
-  .g4{grid-template-columns:repeat(2,1fr)}
-  .g3,.g2,.g-2-1{grid-template-columns:1fr}
-  .studio{grid-template-columns:1fr}
-  .s-side{position:fixed;left:0;top:0;bottom:0;width:246px;z-index:90;transform:translateX(-100%);transition:.2s;height:100vh}
-  .studio.open .s-side{transform:none}
-  .s-side{height:100dvh;padding-bottom:env(safe-area-inset-bottom)}
-  .studio.collapsed{grid-template-columns:1fr}
-  .studio.collapsed .s-nav button span.lbl,.studio.collapsed .s-brand .txt{display:inline}
-  .studio.collapsed .s-group-h,.studio.collapsed .nav-tools{display:flex}
-  .studio.collapsed .s-nav button{justify-content:flex-start;padding:9px 10px}
+  .tn-menu,.tn-user{display:none}
+  .tn-burger{display:block}
+  .tn-in{gap:8px;padding:0 14px}
+  .g3,.g2{grid-template-columns:1fr}
   .s-body{padding:14px}
-  .s-top{padding:11px 14px}
+  .toolbar{padding:9px 10px}
+  .tb-search{order:10;max-width:none;flex:1 1 100%;margin:0}
   .row2,.row3{grid-template-columns:1fr}
+  .panel-h{padding:12px 13px;min-height:50px}
+  .rcard-top,.rcard-bot{gap:10px}
+  .rc-when{width:100%}
+  .ract{margin-left:0}
+  .legend{margin-left:0;width:100%;gap:10px}
+  .tbl th,.tbl td{padding:10px 11px}
 }
 </style>
 </head><body><div id="app"></div>
@@ -582,6 +698,9 @@ h1,h2,h3,h4{margin:0;letter-spacing:-.025em;font-weight:800;line-height:1.1}
    B2Fleet — clickable prototype
    Public marketplace + admin content studio, one file, in-memory state.
    ======================================================================= */
+
+/* ---------- build stamp (injected at build) ---------- */
+const BUILD = '2026.08.25-1645';
 
 /* ---------- assets (base64 injected at build) ---------- */
 const ASSETS = {
@@ -844,14 +963,191 @@ const S = {
 };
 
 const ROLES = {
-  owner:        { label:'Owner',          can:'everything', pages:'*' },
-  admin:        { label:'Administrator',  can:'everything except billing', pages:'*' },
-  editor:       { label:'Content editor', can:'edit and publish content', pages:['dashboard','homepage','vehicles','destinations','suppliers','pages','navigation','footer','media','seo'] },
-  bookings:     { label:'Booking manager',can:'bookings only', pages:['dashboard','bookings'] },
-  viewer:       { label:'Read-only viewer',can:'look, not touch', pages:'*', readonly:true }
+  owner:    { label:'Owner',           can:'everything', pages:'*' },
+  admin:    { label:'Administrator',   can:'everything except billing', pages:'*' },
+  editor:   { label:'Content editor',  can:'edit and publish website content',
+              pages:['dashboard','homepage','pages','navigation','footer','media','branding','seo',
+                     'vehicles','destinations','suppliers'] },
+  bookings: { label:'Reservations desk', can:'reservations, vouchers and messages',
+              pages:['dashboard','reservations','vouchers','messages','statistics'] },
+  viewer:   { label:'Read-only viewer', can:'look, not touch', pages:'*', readonly:true }
 };
 const canEdit = () => S.auth && !ROLES[S.auth.role].readonly;
 const canSee = p => { const r = ROLES[S.auth.role]; return r.pages === '*' || r.pages.includes(p); };
+</script>
+<script>
+/* =======================================================================
+   OPERATIONS DATA — modelled on a live car-rental broker console
+   ======================================================================= */
+
+const FLAGS = { GR:'🇬🇷', GB:'🇬🇧', DE:'🇩🇪', IT:'🇮🇹', FR:'🇫🇷', TR:'🇹🇷', ES:'🇪🇸', NL:'🇳🇱', HR:'🇭🇷', CY:'🇨🇾' };
+
+const RES_STATUS = {
+  Confirmed:   { spine:'#22A06B', chip:'#EAF7F0', text:'#1B7F4B' },
+  'On request':{ spine:'#E8A317', chip:'#FFF4E0', text:'#8A5E00' },
+  'Not available':{ spine:'#7A87A3', chip:'#F1F3F8', text:'#5A6B8C' },
+  'Bad business': { spine:'#5BD1D7', chip:'#E6F8F9', text:'#0E7C86' },
+  Cancelled:   { spine:'#E5484D', chip:'#FDECEC', text:'#B02A2E' }
+};
+
+function res(o) {
+  return Object.assign({
+    brand:'B2Fleet', group:'B', activity:'moments ago', days:7, dob:'', email:'', phone:''
+  }, o);
+}
+
+const RESERVATIONS = [
+  res({ code:'C7RUDQ', no:'526364', name:'Andreas Pappas', status:'On request', country:'GR',
+    email:'a.pappas@sunseatravel.gr', phone:'+30 694 435 8824', dob:'14/03/1988',
+    agency:'Sun & Sea Travel', supplier:'medrent', car:'Fiat Panda', carId:'v1', group:'B',
+    groupLabel:'Mini · Petrol · Manual', days:7, price:126, commission:42,
+    pick:{ d:'12/09/2026 10:00', p:'Athens Airport (ATH)' }, drop:{ d:'19/09/2026 10:00', p:'Athens Airport (ATH)' },
+    badge:'!', badgeTone:'red', activity:'30 minutes ago', stamp:'25/08/2026 16:37' }),
+  res({ code:'7XALWF', no:'526363', name:'Ismini Tsapaliari', status:'Confirmed', country:'GR',
+    email:'isminitsap@yahoo.gr', phone:'+30 697 592 9504', dob:'02/11/1979',
+    agency:'Sun & Sea Travel', supplier:'medrent', car:'VW Polo', carId:'v6', group:'G',
+    groupLabel:'Economy · Petrol · Manual', days:5, price:170, commission:56,
+    pick:{ d:'26/09/2026 10:00', p:'Athens Centre' }, drop:{ d:'31/09/2026 10:00', p:'Athens Centre' },
+    badge:'1', badgeTone:'amber', activity:'45 minutes ago', stamp:'25/08/2026 16:22' }),
+  res({ code:'TUG6PJ', no:'526362', name:'Petros Asikidis', status:'Not available', country:'GR',
+    email:'petrakisotos@gmail.com', phone:'+30 698 940 8887', dob:'23/06/1993',
+    agency:'Blue Horizon Tours', supplier:'nordic', car:'Škoda Octavia', carId:'v8', group:'G',
+    groupLabel:'Compact · Petrol · Automatic', days:2, price:188, commission:62,
+    pick:{ d:'29/09/2026 17:00', p:'Dubrovnik Old Town' }, drop:{ d:'31/09/2026 10:00', p:'Dubrovnik Airport (DBV)' },
+    badge:'4', badgeTone:'amber', activity:'56 minutes ago', stamp:'25/08/2026 16:12' }),
+  res({ code:'XNY4BQ', no:'526361', name:'Lucía Fernández', status:'Confirmed', country:'ES',
+    email:'l.fernandez@globalbt.es', phone:'+34 655 210 447', dob:'09/01/1985',
+    agency:'Global Business Travel', supplier:'elite', car:'BMW 3 Series', carId:'v3', group:'E',
+    groupLabel:'Executive · Petrol · Automatic', days:4, price:322, commission:106,
+    pick:{ d:'16/09/2026 13:30', p:'Lisbon Airport (LIS)' }, drop:{ d:'20/09/2026 13:30', p:'Lisbon Airport (LIS)' },
+    badge:'2', badgeTone:'green', activity:'1 hour ago', stamp:'25/08/2026 15:58' }),
+  res({ code:'MK2PLT', no:'526359', name:'Wolfgang Müller', status:'Confirmed', country:'DE',
+    email:'w.mueller@islandescapes.de', phone:'+49 171 884 2210', dob:'30/07/1968',
+    agency:'Island Escapes', supplier:'sunnycars', car:'Citroën C3', carId:'v12', group:'B',
+    groupLabel:'Economy · Petrol · Manual', days:7, price:140, commission:46,
+    pick:{ d:'18/09/2026 08:00', p:'Larnaca Airport (LCA)' }, drop:{ d:'25/09/2026 08:00', p:'Larnaca Airport (LCA)' },
+    badge:'3', badgeTone:'green', activity:'2 hours ago', stamp:'25/08/2026 14:53' }),
+  res({ code:'QW8ZRD', no:'526357', name:'Roko Kovač', status:'Cancelled', country:'HR',
+    email:'r.kovac@adriatic.hr', phone:'+385 91 220 4471', dob:'17/05/1991',
+    agency:'Adriatic Collection', supplier:'autodalmatia', car:'Volvo XC60', carId:'v4', group:'S',
+    groupLabel:'SUV · Petrol · Automatic', days:5, price:434, commission:0,
+    pick:{ d:'21/09/2026 11:00', p:'Dubrovnik Airport (DBV)' }, drop:{ d:'26/09/2026 11:00', p:'Dubrovnik Airport (DBV)' },
+    badge:'—', badgeTone:'grey', activity:'3 hours ago', stamp:'25/08/2026 13:53' }),
+  res({ code:'LP4NVE', no:'526356', name:'Yeliz Işıldar', status:'Confirmed', country:'TR',
+    email:'yeliz@anatoliatrips.com.tr', phone:'+90 532 118 9043', dob:'25/12/1990',
+    agency:'Anatolia Trips', supplier:'globaldrive', car:'Nissan Qashqai', carId:'v10', group:'S',
+    groupLabel:'SUV · Petrol · Automatic', days:8, price:304, commission:100,
+    pick:{ d:'30/09/2026 12:00', p:'Antalya Airport (AYT)' }, drop:{ d:'08/10/2026 12:00', p:'Antalya Airport (AYT)' },
+    badge:'5', badgeTone:'green', activity:'4 hours ago', stamp:'25/08/2026 13:04' }),
+  res({ code:'ZD9KMR', no:'526355', name:'Michel Gentile', status:'On request', country:'IT',
+    email:'m.gentile@mediterraneo.it', phone:'+39 340 771 2288', dob:'08/02/1976',
+    agency:'Mediterraneo Viaggi', supplier:'medrent', car:'Ford Tourneo', carId:'v11', group:'V',
+    groupLabel:'Van · Diesel · Manual', days:7, price:413, commission:136,
+    pick:{ d:'02/10/2026 07:00', p:'Athens Port (Piraeus)' }, drop:{ d:'09/10/2026 07:00', p:'Athens Airport (ATH)' },
+    badge:'!', badgeTone:'red', activity:'5 hours ago', stamp:'25/08/2026 12:33' })
+];
+
+const VOUCHERS = RESERVATIONS.filter(r => r.status !== 'Not available').map((r, i) => ({
+  no:r.no, supplier:r.supplier, type: i % 3 === 2 ? 'Amendment' : 'Confirmation',
+  sentAgo: ['54 minutes ago', '1 hour ago', '1 hour ago', '2 hours ago', '2 hours ago', '3 hours ago', '4 hours ago'][i] || '5 hours ago',
+  sentAt: r.stamp, received: i % 3 === 1 ? '' : r.stamp, ok: i % 3 !== 1,
+  pick:r.pick, drop:r.drop, days:r.days, price:r.price, name:r.name, country:r.country, brand:r.brand
+}));
+
+const MESSAGES = [
+  { from:'speed.p09@gmail.com', at:'25/08/2026 17:06', ago:'21 minutes ago', no:'525155', days:7, tone:'green',
+    subject:'Reservation Voucher #525155', supplier:'globaldrive',
+    body:'Good evening, I am contacting you to cancel my rental reservation. I am sorry, but I have to cancel because I am having trouble with my bank and cannot guarantee the rental deposit. Thank you and I apologise for the inconvenience.' },
+  { from:'reinhold@smue.de', at:'25/08/2026 16:55', ago:'25 minutes ago', no:'476045', days:1, tone:'amber',
+    subject:'Re: Regarding your booking #476045', supplier:'nordic', body:'' },
+  { from:'MAILER-DAEMON@eu-central-1.amazonses.com', at:'25/08/2026 16:00', ago:'1 hour ago', no:'', days:null, tone:'grey',
+    subject:'Delivery Status Notification (Failure)', supplier:'', attach:1,
+    body:'An error occurred while trying to deliver the mail to the following recipients: isminitsap@yahoo.gr' },
+  { from:'l.fernandez@globalbt.es', at:'25/08/2026 15:51', ago:'1 hour ago', no:'526361', days:1, tone:'amber',
+    subject:'Re: Your reservation voucher #526361', supplier:'elite',
+    body:'Following our phone call I would like a confirmation for one more day than we asked for. The booking was 26/09 to 30/09 and the return date now moves to 31/09. Please confirm the revised rate.' },
+  { from:'m.gentile@mediterraneo.it', at:'24/08/2026 21:38', ago:'19 hours ago', no:'526355', days:4, tone:'amber',
+    subject:'Re: Regarding your booking #526355', supplier:'medrent',
+    body:'Hello, received with thanks. Will provide the requested information shortly. Best regards, Michel.' },
+  { from:'w.mueller@islandescapes.de', at:'24/08/2026 17:22', ago:'23 hours ago', no:'525854', days:null, tone:'grey',
+    subject:'Re: Your reservation voucher #525854', supplier:'sunnycars', attach:5,
+    body:'Hello, we picked up a car from your rental company yesterday and would like to bring a few points to your attention. The car has a number of damages all around the vehicle. We have attached some photos for your reference.' }
+];
+
+/* fleet configuration — the Admin lists */
+const CAR_ATTRIBUTES = [
+  { icon:'fuel', name:'Fuel Type', type:'With multiple options' },
+  { icon:'gear', name:'Transmission', type:'With multiple options' },
+  { icon:'seat', name:'Passengers', type:'With value — input text' },
+  { icon:'bag', name:'Carrier Bags', type:'With value — input text' },
+  { icon:'car', name:'Doors', type:'With value — input text' },
+  { icon:'shield', name:'Airbags', type:'Simple — no value' },
+  { icon:'snow', name:'Air Conditioning', type:'Simple — no value' },
+  { icon:'shield', name:'ABS', type:'Simple — no value' },
+  { icon:'radio', name:'Radio / Bluetooth', type:'Simple — no value' }
+];
+
+const CAR_CATEGORIES = ['Small', 'Medium', 'Large', 'Station Wagons', 'SUVs', 'Convertibles', 'Premium Cars', 'Passenger Vans'];
+
+const CAR_GROUPS = [
+  ['Mini', 'Petrol', 'Manual', 4, 2, 5, '2x csp / 2x ad', 2],
+  ['Mini', 'Petrol', 'Automatic', 4, 2, 5, '2x csp / 2x ad', 2],
+  ['Mini', 'Hybrid', 'Manual', 4, 2, 5, '2x csp / 2x ad', 1],
+  ['Economy', 'Petrol', 'Manual', 4, 2, 5, '2x csp / 2x ad', 2],
+  ['Economy', 'Petrol', 'Automatic', 4, 2, 5, '2x csp / 2x ad', 1],
+  ['Economy', 'Diesel', 'Manual', 4, 2, 5, '2x csp / 2x ad', 2],
+  ['Compact', 'Petrol', 'Manual', 5, 3, 5, '2x csp / 3x ad', 12],
+  ['Compact', 'Petrol', 'Automatic', 5, 3, 5, '2x csp / 3x ad', 10],
+  ['Compact', 'Diesel', 'Automatic', 5, 3, 5, '2x csp / 3x ad', 6],
+  ['Compact Hatchback', 'Petrol', 'Manual', 5, 3, 5, '2x csp / 3x ad', 8],
+  ['Compact Hatchback', 'Electric', 'Automatic', 5, 3, 5, '2x csp / 3x ad', 1],
+  ['Executive', 'Petrol', 'Automatic', 5, 4, 5, '2x csp / 3x ad', 4],
+  ['SUV', 'Petrol', 'Automatic', 5, 4, 5, '2x csp / 3x ad', 7],
+  ['Van', 'Diesel', 'Manual', 9, 5, 5, '2x csp / 4x ad', 3]
+];
+
+const CAR_EXTRAS = [
+  { icon:'users', name:'Additional Drivers', days:30, amount:'', rule:'additional-drivers' },
+  { icon:'seat', name:'Infant Safety Seat', days:'', amount:'100 €', rule:'child-seats-pool' },
+  { icon:'seat', name:'Child Safety Seat', days:'', amount:'100 €', rule:'child-seats-pool' },
+  { icon:'seat', name:'Child Booster Seat', days:'', amount:'100 €', rule:'child-seats-pool' },
+  { icon:'pin', name:'GPS Navigation', days:'', amount:'70 €', rule:'' },
+  { icon:'snow', name:'Snow Chains', days:15, amount:'', rule:'' }
+];
+
+const INSURANCE_ITEMS = [
+  ['Basic Protection', true], ['CDW Protection', true], ['SCDW Protection', true], ['FDW Protection', true],
+  ['Security Deposit', true], ['Unlimited KM', false], ['1st Additional Driver', false], ['Personal Insurance', false],
+  ['3rd Party (Bodily Injury 1.000.000€ · Property Damage 1.000.000€)', false],
+  ['Accidental Damage, Vandalism, Hit & Run', true], ['Fire Insurance', true], ['Theft Insurance', true],
+  ['Roadside Assistance', false], ['Tyre Insurance', false], ['Key Loss', false], ['Underbody', false],
+  ['Windscreen, Mirrors, External Lights and Lamps Coverage', false]
+];
+
+const PRICELISTS = [
+  ['Athens', 11, '5 hours ago', '25/08/2026 11:56'],
+  ['Mykonos', 3, '5 days ago', '20/08/2026 16:58'],
+  ['Lisbon', 4, '5 days ago', '19/08/2026 19:23'],
+  ['Dubrovnik', 2, '6 days ago', '19/08/2026 15:50'],
+  ['Larnaca', 5, '1 day ago', '24/08/2026 13:09'],
+  ['Antalya', 2, '1 month ago', '02/07/2026 16:45'],
+  ['Heraklion', 2, '22 hours ago', '24/08/2026 19:19'],
+  ['Thessaloniki', 1, '2 months ago', '16/06/2026 20:42'],
+  ['Split', 0, 'Never', ''],
+  ['Valletta', 2, '2 months ago', '09/06/2026 18:39']
+];
+
+/* twelve months of demo revenue per supplier */
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const SALES = (() => {
+  const seedShape = [0.04, 0.04, 0.05, 0.07, 0.09, 0.13, 0.21, 0.19, 0.09, 0.05, 0.02, 0.02];
+  const base = { medrent:682943, autodalmatia:132804, elite:85134, globaldrive:80905, nordic:69216, sunnycars:48046 };
+  const areas = { medrent:'Athens', autodalmatia:'Dubrovnik', elite:'Lisbon', globaldrive:'Antalya', nordic:'Dubrovnik', sunnycars:'Larnaca' };
+  return Object.entries(base).map(([id, total]) => ({
+    id, area:areas[id], total,
+    months: seedShape.map((f, i) => i > 8 ? Math.round(total * f * 0.3) : Math.round(total * f))
+  }));
+})();
 </script>
 <script>
 /* =======================================================================
@@ -1097,45 +1393,56 @@ function shade(hex, pct) {
    ======================================================================= */
 
 const NAV = [
-  { group:'Content', items:[
-    { id:'dashboard',   label:'Dashboard',   icon:'grid' },
-    { id:'homepage',    label:'Homepage',    icon:'home' },
-    { id:'pages',       label:'Pages',       icon:'file' },
-    { id:'navigation',  label:'Navigation',  icon:'list' },
-    { id:'footer',      label:'Footer',      icon:'panel' }
-  ]},
-  { group:'Marketplace', items:[
-    { id:'vehicles',    label:'Vehicles',    icon:'car' },
-    { id:'categories',  label:'Vehicle categories', icon:'layers', soon:true },
-    { id:'destinations',label:'Destinations',icon:'pin' },
-    { id:'locations',   label:'Locations',   icon:'pin', soon:true },
-    { id:'suppliers',   label:'Suppliers',   icon:'shield' },
-    { id:'insurance',   label:'Insurance plans', icon:'shield', soon:true },
-    { id:'extras',      label:'Extras',      icon:'box', soon:true },
-    { id:'offers',      label:'Offers and promotions', icon:'tag', soon:true }
-  ]},
-  { group:'Operations', items:[
-    { id:'bookings',    label:'Bookings',    icon:'ticket' },
-    { id:'agencies',    label:'Customer agencies', icon:'users', soon:true },
-    { id:'testimonials',label:'Testimonials',icon:'quote', soon:true }
-  ]},
-  { group:'Brand and media', items:[
+  { group:'Dashboard',    single:'dashboard' },
+  { group:'Reservations', single:'reservations' },
+  { group:'Vouchers',     single:'vouchers' },
+  { group:'Messages',     single:'messages', count:6 },
+  { group:'Statistics',   single:'statistics' },
+  { group:'Website', items:[
+    { id:'homepage',    label:'Homepage',      icon:'home' },
+    { id:'pages',       label:'Pages',         icon:'file' },
+    { id:'navigation',  label:'Navigation',    icon:'list' },
+    { id:'footer',      label:'Footer',        icon:'panel' },
     { id:'media',       label:'Media library', icon:'img' },
-    { id:'branding',    label:'Branding',    icon:'palette' },
-    { id:'seo',         label:'SEO',         icon:'search' }
+    { id:'branding',    label:'Branding',      icon:'palette' },
+    { id:'seo',         label:'SEO',           icon:'search' }
   ]},
-  { group:'System', items:[
-    { id:'users',       label:'Users and permissions', icon:'users' },
-    { id:'settings',    label:'Site settings', icon:'gear' }
+  { group:'Admin', sections:[
+    { label:'Cars and suppliers', items:[
+      { id:'vehicles',    label:'Cars',              icon:'car' },
+      { id:'cargroups',   label:'Car groups',        icon:'layers' },
+      { id:'carattrs',    label:'Car attributes',    icon:'gear' },
+      { id:'carcats',     label:'Car categories',    icon:'grid' },
+      { id:'extras',      label:'Car extras',        icon:'box' },
+      { id:'insurance',   label:'Insurance items',   icon:'shield' },
+      { id:'suppliers',   label:'Suppliers',         icon:'shield' },
+      { id:'pricelists',  label:'Pricelists',        icon:'money' }
+    ]},
+    { label:'Configuration', items:[
+      { id:'destinations',label:'Destinations',      icon:'pin' },
+      { id:'locations',   label:'Pick-up locations', icon:'pin', soon:true },
+      { id:'offers',      label:'Offers',            icon:'tag', soon:true },
+      { id:'agencies',    label:'Customer agencies', icon:'users', soon:true },
+      { id:'testimonials',label:'Testimonials',      icon:'quote', soon:true },
+      { id:'users',       label:'Users and permissions', icon:'users' },
+      { id:'settings',    label:'Site settings',     icon:'gear' }
+    ]}
   ]}
 ];
 
-const GROUPS = NAV.map(g => g.group);
-const GROUP_OF = {};
-NAV.forEach(g => g.items.forEach(i => GROUP_OF[i.id] = g.group));
+/* flatten every shape into one list of pages */
+function navItems(g) {
+  if (g.single) return [{ id:g.single, label:g.group, icon:'grid' }];
+  if (g.items) return g.items;
+  return g.sections.flatMap(sec => sec.items);
+}
 
-const PAGE_TITLE = {};
-NAV.forEach(g => g.items.forEach(i => PAGE_TITLE[i.id] = { label:i.label, group:g.group, soon:i.soon }));
+const GROUPS = NAV.map(g => g.group);
+const GROUP_OF = {}, PAGE_TITLE = {};
+NAV.forEach(g => navItems(g).forEach(i => {
+  GROUP_OF[i.id] = g.group;
+  PAGE_TITLE[i.id] = { label:i.label, group:g.group, soon:i.soon };
+}));
 
 /* ---------- toast ---------- */
 let toastT;
@@ -1193,64 +1500,101 @@ function signinView() {
   </div></div>`;
 }
 
-/* ---------- studio chrome ---------- */
+/* ---------- studio chrome: top navigation, like an operations console ---------- */
+function topNav() {
+  const order = S.navOrder || GROUPS;
+  return order.map((gname, gi) => {
+    const g = NAV.find(x => x.group === gname);
+    if (!g) return '';
+    const visible = navItems(g).filter(i => canSee(i.id) && !(S.hideSoon && i.soon));
+    if (!visible.length) return '';
+
+    if (g.single) {
+      return `<div class="tn-item"><button type="button" class="tn-btn ${S.adminPage === g.single ? 'on' : ''}"
+        data-goto="${g.single}">${esc(g.group)}
+        ${g.count ? `<span class="tn-count">${g.count}</span>` : ''}</button></div>`;
+    }
+
+    const holdsActive = visible.some(i => i.id === S.adminPage);
+    const open = S.openMenu === gname;
+    const link = i => `<button type="button" class="tn-link ${S.adminPage === i.id ? 'on' : ''}" data-goto="${i.id}">
+      <span class="dot"></span>${i.label}${i.soon ? '<span class="soon">SOON</span>' : ''}</button>`;
+
+    let body;
+    if (g.sections) {
+      const secIdx = S.openSection == null ? 0 : S.openSection;
+      const secs = g.sections.filter(sec => sec.items.some(i => canSee(i.id) && !(S.hideSoon && i.soon)));
+      body = `<div class="tn-two">
+        <div class="tn-col1">${secs.map((sec, si) => `
+          <button type="button" class="tn-sec ${si === secIdx ? 'on' : ''}" data-section="${si}">
+            ${I(si === 0 ? 'car' : 'gear', 16)}${sec.label}<span class="caret">${I('right', 13)}</span></button>`).join('')}</div>
+        <div class="tn-col2">${(secs[secIdx] || secs[0]).items
+          .filter(i => canSee(i.id) && !(S.hideSoon && i.soon)).map(link).join('')}</div>
+      </div>`;
+    } else {
+      body = visible.map(link).join('');
+    }
+
+    return `<div class="tn-item">
+      <button type="button" class="tn-btn ${holdsActive ? 'on' : ''}" data-menu="${esc(gname)}"
+        aria-expanded="${open}" aria-haspopup="true">${esc(gname)}
+        <span class="caret">${I('chev', 13)}</span></button>
+      ${open ? `<div class="tn-drop ${g.sections ? 'wide' : ''}">
+        <div class="tn-drop-h"><b>${esc(gname)}</b>
+          <button type="button" data-gmove="${gi}:-1" aria-label="Move menu left" ${gi === 0 ? 'disabled' : ''}>${I('up', 12)}</button>
+          <button type="button" data-gmove="${gi}:1" aria-label="Move menu right" ${gi === order.length - 1 ? 'disabled' : ''}>${I('down', 12)}</button>
+        </div>
+        ${body}
+        <div class="tn-drop-f"><label class="switch" style="font-size:12px">
+          <input type="checkbox" id="hideSoon" ${S.hideSoon ? 'checked' : ''}><i></i>Hide unbuilt sections</label></div>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
 function studioView() {
-  const meta = PAGE_TITLE[S.adminPage] || { label:'Dashboard', group:'Content' };
   const initials = S.auth.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-  return `<div class="studio${S.sideCollapsed ? ' collapsed' : ''}${S.sideOpen ? ' open' : ''}" id="studio">
-    <aside class="s-side">
-      <div class="s-brand">${logoMark(26, true)}<span class="txt" style="color:#fff;font-weight:800;letter-spacing:-.02em">B2Fleet</span>
-        <span class="tag txt">Studio</span></div>
-      <nav class="s-nav">
-        <div class="nav-tools">
-          <label class="switch mini"><input type="checkbox" id="hideSoon" ${S.hideSoon ? 'checked' : ''}><i></i>
-            <span class="lbl">Hide unbuilt</span></label>
+  return `<div class="studio" id="studio">
+    <header class="tn">
+      <div class="tn-in">
+        <a class="tn-brand" href="#/">${logoMark(26)}
+          <span style="font-weight:800;letter-spacing:-.02em;color:#2E3A59;font-size:15px">B2Fleet</span>
+          <span class="tag">Studio</span>
+          <span class="build" title="Build currently served">${BUILD}</span></a>
+        <nav class="tn-menu">${topNav()}</nav>
+        <div class="tn-right">
+          <span class="save-dot ${S.dirty ? 'dirty' : 'saved'}" id="saveDot"><i></i>
+            <span>${S.dirty ? 'Unpublished changes' : 'Published ' + S.lastPublished}</span></span>
+          <a class="icon-btn" href="#/" title="View the public site">${I('eye', 16)}</a>
+          <button class="btn btn-pri" type="button" id="publishBtn" ${canEdit() ? '' : 'disabled'}
+            style="padding:8px 15px">Publish</button>
+          <div class="tn-user">
+            <span class="who"><small>${esc(S.auth.name)}</small><b>${ROLES[S.auth.role].label}</b></span>
+            <span class="avatar">${initials}</span>
+            <button class="icon-btn" type="button" id="signout" title="Sign out">${I('right', 15)}</button>
+          </div>
+          <button class="tn-burger" type="button" id="sideToggle" aria-label="Menu">${I(S.sideOpen ? 'x' : 'menu', 18)}</button>
         </div>
-        ${(S.navOrder || GROUPS).map((gname, gi) => {
-          const g = NAV.find(x => x.group === gname);
-          const items = g.items.filter(i => canSee(i.id) && !(S.hideSoon && i.soon));
-          if (!items.length) return '';
-          const closed = S.navClosed && S.navClosed[gname];
-          const holdsActive = items.some(i => i.id === S.adminPage);
-          return `<div class="s-group${closed ? ' closed' : ''}" data-gidx="${gi}" draggable="true">
-            <div class="s-group-h">
-              <button type="button" class="ghead" data-group="${esc(gname)}"
-                aria-expanded="${!closed}">
-                <span class="chev">${I('chev', 12)}</span><span class="lbl">${esc(gname)}</span>
-                ${closed && holdsActive ? '<span class="adot"></span>' : ''}
-                ${closed ? `<span class="gcount">${items.length}</span>` : ''}</button>
-              <span class="gmove">
-                <button type="button" data-gmove="${gi}:-1" aria-label="Move ${esc(gname)} up" ${gi === 0 ? 'disabled' : ''}>${I('up', 12)}</button>
-                <button type="button" data-gmove="${gi}:1" aria-label="Move ${esc(gname)} down" ${gi === (S.navOrder || GROUPS).length - 1 ? 'disabled' : ''}>${I('down', 12)}</button>
-              </span>
-            </div>
-            <div class="s-group-items">${items.map(i => `
-              <button type="button" data-goto="${i.id}" class="${S.adminPage === i.id ? 'on' : ''}">
-                <span class="ic">${I(i.icon, 17)}</span><span class="lbl">${i.label}</span>
-                ${i.soon ? '<span class="soon">SOON</span>' : ''}</button>`).join('')}</div>
-          </div>`;
-        }).join('')}
-      </nav>
-      <div class="s-foot"><span class="avatar">${initials}</span>
-        <span class="who"><b>${esc(S.auth.name)}</b><span style="color:#8FA8C6">${ROLES[S.auth.role].label}</span></span>
-        <button class="icon-btn" type="button" id="signout" title="Sign out"
-          style="margin-left:auto;background:transparent;border-color:rgba(255,255,255,.2);color:#C2D4EA">${I('right', 15)}</button>
       </div>
-    </aside>
-    <div class="s-main">
-      <header class="s-top">
-        <button class="icon-btn" type="button" id="sideToggle" aria-label="Toggle navigation">${I('menu', 18)}</button>
-        <div><div class="crumb">${esc(meta.group)}</div><h1>${esc(meta.label)}</h1></div>
-        <div class="acts">
-          <span class="save-dot ${S.dirty ? 'dirty' : 'saved'}" id="saveDot"><i></i><span>${
-            S.dirty ? 'Unpublished changes' : 'Published ' + S.lastPublished}</span></span>
-          <a class="btn btn-ghost" href="#/" target="_self">${I('eye', 15)} View site</a>
-          <button class="btn btn-pri" type="button" id="publishBtn" ${canEdit() ? '' : 'disabled'}>Publish</button>
+      ${S.sideOpen ? `<div class="tn-sheet">
+        ${(S.navOrder || GROUPS).map(gname => {
+          const g = NAV.find(x => x.group === gname);
+          const items = navItems(g).filter(i => canSee(i.id) && !(S.hideSoon && i.soon));
+          if (!items.length) return '';
+          return (g.single ? '' : `<h6>${esc(gname)}</h6>`) + items.map(i => `
+            <button type="button" data-goto="${i.id}" class="${S.adminPage === i.id ? 'on' : ''}">
+              ${I(i.icon, 17)}${i.label}${i.soon ? '<span class="soon">SOON</span>' : ''}</button>`).join('');
+        }).join('')}
+        <div style="padding:14px 8px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <label class="switch"><input type="checkbox" id="hideSoon" ${S.hideSoon ? 'checked' : ''}><i></i>Hide unbuilt</label>
+          <span style="margin-left:auto;color:#9AA3B5;font-size:12px">${esc(S.auth.name)} · ${ROLES[S.auth.role].label}</span>
+          <span class="build" style="width:100%;margin-top:6px">Build ${BUILD}</span>
+          <button class="icon-btn" type="button" id="signout">${I('right', 15)}</button>
         </div>
-      </header>
-      <div class="s-body" id="adminBody">${adminPage()}</div>
-    </div>
-  </div>${S.sideOpen ? '<div class="scrim" id="sideScrim"></div>' : ''}`;
+      </div>` : ''}
+    </header>
+    <div class="s-body" id="adminBody">${adminPage()}</div>
+  </div>${S.openMenu ? '<div style="position:fixed;inset:0;z-index:55" id="menuScrim"></div>' : ''}`;
 }
 
 /* ---------- dashboard ---------- */
@@ -1267,10 +1611,11 @@ function dashboard() {
   ${S.dirty ? `<div class="alert a-warn" style="margin-bottom:16px">${I('warn', 18)}
     <div><b>You have unpublished changes</b>The public site is still showing the last published version. Use Publish when you are ready.</div></div>` : ''}
   <div class="grid g4" style="margin-bottom:16px">
-    ${kpi('car', 'Published vehicles', d.vehicles.filter(v => v.status === 'published').length, `${d.vehicles.length} total`)}
-    ${kpi('pin', 'Destinations', d.destinations.filter(x => x.status === 'published').length, `${d.destinations.filter(x => x.status === 'draft').length} in draft`)}
-    ${kpi('shield', 'Active suppliers', d.suppliers.filter(s => s.status === 'active').length, '6 countries')}
-    ${kpi('ticket', 'Bookings this month', S.bookings.length, eur(S.bookings.reduce((a, b) => a + b.commission, 0)) + ' commission')}
+    ${kpi('ticket', 'Reservations today', RESERVATIONS.length,
+      RESERVATIONS.filter(r => r.status === 'On request').length + ' awaiting supplier')}
+    ${kpi('money', 'Sales today', eur(3155), eur(SALES.reduce((a, s) => a + s.total, 0)) + ' this year')}
+    ${kpi('head', 'Unread messages', MESSAGES.length, MESSAGES.filter(m => m.attach).length + ' with attachments')}
+    ${kpi('car', 'Published cars', d.vehicles.filter(v => v.status === 'published').length, `${d.vehicles.length} in the fleet`)}
   </div>
   <div class="grid g-2-1">
     <div style="display:grid;gap:16px">
@@ -1288,6 +1633,8 @@ function dashboard() {
       </div></div>
       <div class="panel"><div class="panel-h"><h3>Quick actions</h3></div><div class="panel-b"
         style="display:flex;gap:9px;flex-wrap:wrap">
+        <button class="btn btn-ghost" data-goto="reservations" type="button">${I('ticket', 15)} Reservations</button>
+        <button class="btn btn-ghost" data-goto="vouchers" type="button">${I('file', 15)} Vouchers</button>
         <button class="btn btn-ghost" data-goto="homepage" type="button">${I('edit', 15)} Edit the homepage</button>
         <button class="btn btn-ghost" data-quick="newvehicle" type="button">${I('plus', 15)} Add a vehicle</button>
         <button class="btn btn-ghost" data-quick="newdest" type="button">${I('plus', 15)} Add a destination</button>
@@ -1315,6 +1662,29 @@ function setPath(o, p, v) {
   k.reduce((a, x) => a[x], o)[last] = v;
 }
 const ro = () => canEdit() ? '' : 'disabled';
+
+/* ---------------- shared record-page furniture ---------------- */
+function tbSel(id, label, value, opts) {
+  return `<span class="tb-sel">${I('chev', 12)}${label}:
+    <select id="${id}">${opts.map(o =>
+      `<option value="${esc(o[0])}" ${value === o[0] ? 'selected' : ''}>${esc(o[1])}</option>`).join('')}</select></span>`;
+}
+function tbSearch(id, value, ph) {
+  return `<span class="tb-search"><input id="${id}" value="${esc(value || '')}" placeholder="${ph || 'Search …'}">
+    <span class="ic">${I('search', 15)}</span></span>`;
+}
+function tbPager(shown, total, page, per, key) {
+  const last = Math.max(1, Math.ceil(total / per));
+  return `<span class="tb-right">
+    <span class="tb-page">${total ? (page * per + 1) + ' - ' + Math.min(total, page * per + shown) : 0} of ${total}</span>
+    <button class="tb-btn" type="button" data-page="${key}:-1" ${page === 0 ? 'disabled' : ''}>${I('chev', 14)}</button>
+    <button class="tb-btn" type="button" data-page="${key}:1" ${page >= last - 1 ? 'disabled' : ''}>${I('chev', 14)}</button>
+    ${tbSel('perRows', 'Rows', String(per), [['10', '10 rows'], ['25', '25 rows'], ['50', '50 rows']])}
+    <button class="tb-btn" type="button" data-refresh aria-label="Refresh">${I('clock', 14)}</button>
+  </span>`;
+}
+const recCount = n => `<div class="rec-count">Displaying ${n} record${n === 1 ? '' : 's'}</div>`;
+const perPage = () => S.perPage || 25;
 
 /* ---------------- HOMEPAGE ---------------- */
 const SECTION_FIELDS = {
@@ -1465,44 +1835,49 @@ function schedulePreview() { clearTimeout(prevT); prevT = setTimeout(paintPrevie
 
 /* ---------------- VEHICLES ---------------- */
 function pageVehicles() {
-  const list = S.draft.vehicles.filter(v => {
-    const q = (S.vq || '').toLowerCase();
-    const okQ = !q || (v.name + v.category + v.brand).toLowerCase().includes(q);
-    const okC = !S.vcat || v.category === S.vcat;
-    return okQ && okC;
+  const q = (S.vq || '').toLowerCase();
+  const all = S.draft.vehicles.filter(v => {
+    const okQ = !q || (v.name + v.category + v.brand + v.model).toLowerCase().includes(q);
+    return okQ && (!S.vcat || v.category === S.vcat) && (!S.vstat || v.status === S.vstat);
   });
-  return `<div class="panel">
-    <div class="panel-h">
-      <input class="inp" id="vSearch" placeholder="Search vehicles" value="${esc(S.vq || '')}" style="max-width:230px">
-      <select class="sel" id="vCat" style="max-width:170px">
-        <option value="">All categories</option>
-        ${CATS.map(c => `<option ${S.vcat === c ? 'selected' : ''}>${c}</option>`).join('')}
-      </select>
-      <div class="r"><span style="font-size:12.5px;color:var(--muted)">${list.length} of ${S.draft.vehicles.length}</span>
-        <button class="btn btn-pri" type="button" data-quick="newvehicle" ${ro()}>${I('plus', 15)} New vehicle</button></div>
-    </div>
+  const per = perPage(), page = Math.min(S.vPage || 0, Math.max(0, Math.ceil(all.length / per) - 1));
+  const list = all.slice(page * per, page * per + per);
+  return `
+  <div class="toolbar">
+    ${tbSel('vCat', 'Category', S.vcat || '', [['', 'All'], ...CATS.map(c => [c, c])])}
+    ${tbSel('vStat', 'Status', S.vstat || '', [['', 'All'], ['published', 'Published'], ['draft', 'Draft'], ['archived', 'Archived']])}
+    ${tbSearch('vSearch', S.vq, 'Search vehicles …')}
+    ${tbPager(list.length, all.length, page, per, 'vPage')}
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h3>Vehicles</h3>
+      <div class="r"><button class="add-btn" type="button" data-quick="newvehicle" ${ro()} aria-label="New vehicle">${I('plus', 17)}</button></div></div>
     <div class="tbl-scroll"><table class="tbl">
-      <thead><tr><th>Vehicle</th><th>Category</th><th>Supplier</th><th>Net/day</th><th>Total (7d)</th>
-        <th>Commission</th><th>Status</th><th></th></tr></thead>
-      <tbody>${list.map(v => {
-        const s = supOf(S.draft, v.supplier);
+      <thead><tr><th>Vehicle</th><th>Category</th><th>Supplier</th><th>Destination</th><th>Net/day</th>
+        <th>Total 7d</th><th>Commission</th><th>Status</th><th style="text-align:right">Action</th></tr></thead>
+      <tbody>${list.length ? list.map(v => {
+        const sup = supOf(S.draft, v.supplier);
+        const dst = S.draft.destinations.find(x => x.id === v.destination);
         return `<tr>
           <td><div class="nm"><img class="thumb" src="${img(v.image)}" alt="">
             <span><b>${esc(v.name)}</b><small>${esc(v.orSimilar)} · ${v.seats} seats · ${esc(v.transmission)}</small></span></div></td>
           <td><span class="chip">${esc(v.category)}</span></td>
-          <td>${esc(s.name)}</td>
-          <td><b>${eur(v.net)}</b></td>
+          <td>${esc(sup.name)}</td>
+          <td>${esc(dst ? dst.name : '—')}</td>
+          <td><b style="color:#2E3A59">${eur(v.net)}</b></td>
           <td>${eur(v.total)}</td>
-          <td style="color:var(--amber);font-weight:700">${eur(v.commission)}</td>
-          <td><span class="badge ${v.status === 'published' ? 'b-live' : 'b-draft'}">${v.status === 'published' ? 'Published' : 'Draft'}</span>
+          <td style="color:#8A5E00;font-weight:600">${eur(v.commission)}</td>
+          <td><span class="badge ${v.status === 'published' ? 'b-live' : v.status === 'draft' ? 'b-draft' : 'b-arch'}">${
+            v.status[0].toUpperCase() + v.status.slice(1)}</span>
             ${v.featured ? '<span class="badge b-blue" style="margin-left:4px">Featured</span>' : ''}</td>
-          <td style="text-align:right;white-space:nowrap">
-            <button class="ord" type="button" data-veh="${v.id}" aria-label="Edit">${I('edit', 14)}</button>
-            <button class="ord" type="button" data-vdup="${v.id}" aria-label="Duplicate" ${ro()}>${I('copy', 14)}</button>
-          </td></tr>`;
-      }).join('')}</tbody>
+          <td><div class="act">
+            <button type="button" data-vdup="${v.id}" aria-label="Duplicate" ${ro()}>${I('copy', 15)}</button>
+            <button type="button" data-veh="${v.id}" aria-label="Edit">${I('edit', 15)}</button>
+          </div></td></tr>`;
+      }).join('') : `<tr><td colspan="9"><div class="empty"><h3>No vehicles match</h3>
+        <p>Clear the filters or widen the search.</p></div></td></tr>`}</tbody>
     </table></div>
-  </div>`;
+  </div>${recCount(all.length)}`;
 }
 
 function vehicleDrawer(id) {
@@ -1580,11 +1955,17 @@ function vehicleDrawer(id) {
 
 /* ---------------- DESTINATIONS ---------------- */
 function pageDestinations() {
-  return `<div class="panel">
+  const list = S.draft.destinations;
+  return `<div class="toolbar">
+    ${tbSel('dStat', 'Status', S.dstat || '', [['', 'All'], ['published', 'Published'], ['draft', 'Draft']])}
+    <span class="tb-right"><span class="tb-page">${list.length} destinations</span>
+      <button class="tb-btn" type="button" data-refresh aria-label="Refresh">${I('clock', 14)}</button></span>
+  </div>
+  <div class="panel">
     <div class="panel-h"><h3>Destinations</h3>
-      <div class="r"><button class="btn btn-pri" type="button" data-quick="newdest" ${ro()}>${I('plus', 15)} New destination</button></div></div>
+      <div class="r"><button class="add-btn" type="button" data-quick="newdest" ${ro()} aria-label="New destination">${I('plus', 17)}</button></div></div>
     <div class="panel-b"><div class="media-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">
-      ${S.draft.destinations.map(d => `
+      ${S.draft.destinations.filter(d => !S.dstat || d.status === S.dstat).map(d => `
         <button class="mtile" type="button" data-dest="${d.id}">
           <div class="ratio r-4x3"><img class="cover" src="${img(d.image)}" alt="" style="${fp(d.focal)}"></div>
           <div class="cap" style="padding:10px">
@@ -1593,7 +1974,7 @@ function pageDestinations() {
             <div style="margin-top:7px"><span class="badge ${d.status === 'published' ? 'b-live' : 'b-draft'}">${
               d.status === 'published' ? 'Published' : 'Draft'}</span></div></div>
         </button>`).join('')}
-    </div></div></div>`;
+    </div></div></div>${recCount(S.draft.destinations.filter(d => !S.dstat || d.status === S.dstat).length)}`;
 }
 
 function destDrawer(id) {
@@ -1631,10 +2012,11 @@ function destDrawer(id) {
 /* ---------------- SUPPLIERS ---------------- */
 function pageSuppliers() {
   return `<div class="panel">
-    <div class="panel-h"><h3>Suppliers</h3><div class="r">
-      <span style="font-size:12.5px;color:var(--muted)">Logos render inside identical 3:1 boxes using contain — wide and square marks both stay undistorted</span></div></div>
+    <div class="panel-h"><h3>Suppliers</h3>
+      <div class="r"><button class="add-btn" type="button"
+        onclick="toast('Adding suppliers is not wired up in the prototype.')" ${ro()} aria-label="New supplier">${I('plus', 17)}</button></div></div>
     <div class="tbl-scroll"><table class="tbl">
-      <thead><tr><th>Supplier</th><th>Countries</th><th>Rating</th><th>Fulfilment</th><th>Instant</th><th>Deposit</th><th>Status</th><th></th></tr></thead>
+      <thead><tr><th>Supplier</th><th>Countries</th><th>Rating</th><th>Fulfilment</th><th>Instant</th><th>Deposit</th><th>Status</th><th style="text-align:right">Action</th></tr></thead>
       <tbody>${S.draft.suppliers.map(s => `<tr>
         <td><div class="nm"><span class="sup-box" style="width:96px;padding:6px;aspect-ratio:auto;height:38px">${supplierLogo(s)}</span>
           <span><b>${esc(s.name)}</b><small>${s.reviews.toLocaleString('en-GB')} reviews</small></span></div></td>
@@ -1644,8 +2026,8 @@ function pageSuppliers() {
         <td>${s.instant ? `<span class="badge b-live">Yes</span>` : `<span class="badge b-arch">On request</span>`}</td>
         <td>${esc(s.deposit)}</td>
         <td><span class="badge ${s.status === 'active' ? 'b-live' : 'b-arch'}">${s.status === 'active' ? 'Active' : 'Inactive'}</span></td>
-        <td style="text-align:right"><button class="ord" type="button" data-sup="${s.id}">${I('edit', 14)}</button></td>
-      </tr>`).join('')}</tbody></table></div></div>`;
+        <td><div class="act"><button type="button" data-sup="${s.id}" aria-label="Edit">${I('edit', 15)}</button></div></td>
+      </tr>`).join('')}</tbody></table></div></div>${recCount(S.draft.suppliers.length)}`;
 }
 
 function supDrawer(id) {
@@ -1986,6 +2368,315 @@ function publicBody(site) {
 }
 </script>
 <script>
+/* =======================================================================
+   OPERATIONS SCREENS
+   ======================================================================= */
+
+const supName = id => (S.draft.suppliers.find(s => s.id === id) || { name:'—' }).name;
+const supMark = id => {
+  const s = S.draft.suppliers.find(x => x.id === id);
+  return s ? `<span class="coop"><span class="coop-dot" style="background:${s.colour}">${esc(s.name[0])}</span>${esc(s.name)}</span>`
+           : '<span style="color:#B4BDCE">—</span>';
+};
+
+/* ---------------- RESERVATIONS ---------------- */
+function pageReservations() {
+  const q = (S.rq || '').toLowerCase();
+  const all = RESERVATIONS.filter(r =>
+    (!S.rstat || r.status === S.rstat) &&
+    (!q || (r.name + r.code + r.no + r.car + r.agency).toLowerCase().includes(q)));
+  return `
+  <div class="toolbar">
+    ${tbSel('rStat', 'Status', S.rstat || '', [['', 'All'], ...Object.keys(RES_STATUS).map(k => [k, k])])}
+    ${tbSel('rSort', 'Sort', S.rsort || 'recent', [['recent', 'Most recent'], ['pickup', 'By pick-up date']])}
+    ${tbSearch('rSearch', S.rq, 'Search reservations …')}
+    <span class="tb-right">
+      <button class="btn btn-pri" type="button" style="padding:7px 13px;font-size:13px"
+        onclick="toast('Creating reservations is not wired up in the prototype.')" ${ro()}>${I('plus', 14)} Create reservation</button>
+      <span class="tb-page">1 - ${all.length} of ${RESERVATIONS.length}</span>
+      <button class="tb-btn" type="button" data-refresh aria-label="Refresh">${I('clock', 14)}</button>
+    </span>
+  </div>
+  ${all.length ? `<div class="res-list">${all.map(resCard).join('')}</div>`
+    : `<div class="panel"><div class="empty"><h3>No reservations match</h3><p>Clear the status filter or widen the search.</p></div></div>`}
+  ${recCount(all.length)}`;
+}
+
+function resCard(r) {
+  const st = RES_STATUS[r.status] || RES_STATUS.Confirmed;
+  const v = S.draft.vehicles.find(x => x.id === r.carId);
+  return `<article class="rcard" data-res="${r.no}">
+    <span class="spine" style="background:${st.spine}"></span>
+    <div class="rcard-top">
+      <div class="rc-cust">
+        <b>${esc(r.name)}</b>
+        <span class="rstat" style="background:${st.chip};color:${st.text}">
+          <i style="background:${st.spine}"></i>${esc(r.status)}</span>
+        <span class="rmeta">${FLAGS[r.country] || ''} ${esc(r.agency)}</span>
+        ${r.email ? `<span class="rmeta">${I('file', 13)}${esc(r.email)}</span>` : ''}
+        ${r.phone ? `<span class="rmeta">${I('head', 13)}${esc(r.phone)}</span>` : ''}
+        ${r.dob ? `<span class="rmeta">${I('user', 13)}${esc(r.dob)}</span>` : ''}
+      </div>
+      <div class="rc-when">
+        <span class="whenbox"><b>${I('cal', 13)}${esc(r.pick.d)}</b><span>${I('pin', 12)}${esc(r.pick.p)}</span></span>
+        <span class="arrow">${I('right', 15)}</span>
+        <span class="whenbox"><b>${I('cal', 13)}${esc(r.drop.d)}</b><span>${I('pin', 12)}${esc(r.drop.p)}</span></span>
+      </div>
+      <span class="numbadge t-${r.badgeTone}">${esc(r.badge)}</span>
+    </div>
+    <div class="rcard-bot">
+      <span class="rcode"><b>${esc(r.code)}</b><small>${esc(r.no)}</small></span>
+      ${supMark(r.supplier)}
+      <span class="rdays"><b>${r.days} days</b><small>${eur(r.price)}</small></span>
+      <span class="rcar">
+        ${v ? `<img src="${img(v.image)}" alt="">` : ''}
+        <span><b>${esc(r.car)}</b><small>${esc(r.groupLabel)}</small></span></span>
+      <span class="grpbadge">${esc(r.group)}</span>
+      <span class="ract">${I('clock', 13)}${esc(r.activity)}<small>${esc(r.stamp)}</small></span>
+      <span class="rbrand">${logoMark(20)}</span>
+    </div>
+  </article>`;
+}
+
+function resDrawer(no) {
+  const r = RESERVATIONS.find(x => x.no === no);
+  if (!r) return;
+  const st = RES_STATUS[r.status];
+  openDrawer(`
+    <div class="alert a-info" style="margin-bottom:16px">${I('shield', 17)}
+      <div>Traveller details are personal data. Access follows your role and every view is written to the audit log.</div></div>
+    <div class="grid g2" style="gap:12px">
+      ${[['Reference', r.code + ' · ' + r.no], ['Status', r.status], ['Agency', r.agency], ['Traveller', r.name],
+         ['Email', r.email], ['Phone', r.phone], ['Date of birth', r.dob], ['Supplier', supName(r.supplier)],
+         ['Vehicle', r.car], ['Group', r.groupLabel], ['Duration', r.days + ' days'],
+         ['Price', eur(r.price)], ['Commission', eur(r.commission)],
+         ['Pick-up', r.pick.d + ' · ' + r.pick.p], ['Drop-off', r.drop.d + ' · ' + r.drop.p]]
+        .map(([k, v]) => `<div><div class="crop-lbl">${k}</div><div style="font-weight:600;color:#2E3A59">${esc(v || '—')}</div></div>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px">
+      <button class="btn btn-ghost" type="button" onclick="toast('Voucher rendering is not wired up in the prototype.')">${I('down2', 15)} Voucher</button>
+      <button class="btn btn-ghost" type="button" onclick="toast('Supplier message not wired up.')">${I('head', 15)} Message supplier</button>
+    </div>`,
+    { title:r.name, sub:'Reservation ' + r.no, noSave:true });
+}
+
+/* ---------------- VOUCHERS ---------------- */
+function pageVouchers() {
+  const all = VOUCHERS.filter(v => (!S.vtype || v.type === S.vtype) &&
+    (!S.vstatus || (S.vstatus === 'ok' ? v.ok : !v.ok)));
+  return `
+  <div class="toolbar">
+    ${tbSel('vType', 'Type', S.vtype || '', [['', 'All'], ['Confirmation', 'Confirmation'], ['Amendment', 'Amendment']])}
+    ${tbSel('vStatus', 'Status', S.vstatus || '', [['', 'All'], ['ok', 'Received'], ['pending', 'Awaiting']])}
+    ${tbSearch('vchSearch', S.vchq, 'Search vouchers …')}
+    <span class="tb-right"><span class="tb-page">1 - ${all.length} of ${VOUCHERS.length}</span>
+      <button class="tb-btn" type="button" data-refresh aria-label="Refresh">${I('clock', 14)}</button></span>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h3>Vouchers</h3></div>
+    <div class="tbl-scroll"><table class="tbl">
+      <thead><tr><th>Supplier</th><th>Reserv.</th><th>Voucher</th><th>Sent</th><th>Status</th><th>Received</th>
+        <th>Pick-up</th><th>Drop-off</th><th>Price</th><th>Customer</th><th style="text-align:right">Action</th></tr></thead>
+      <tbody>${all.filter(v => !S.vchq || (v.no + v.name).toLowerCase().includes((S.vchq || '').toLowerCase())).map(v => `<tr>
+        <td>${supMark(v.supplier)}</td>
+        <td><span class="respill">${esc(v.no)}</span></td>
+        <td><span class="vtype ${v.type === 'Amendment' ? 'amend' : ''}">${I('file', 13)}${v.type}</span></td>
+        <td><b style="color:#2E3A59">${esc(v.sentAgo)}</b><br><small style="color:#9AA3B5">${esc(v.sentAt)}</small></td>
+        <td><span class="vstat ${v.ok ? 'ok' : 'wait'}">${v.ok ? I('check', 14) : '?'}</span></td>
+        <td>${v.received ? `<small style="color:#9AA3B5">${esc(v.received)}</small>` : '<span style="color:#C3CBDA">—</span>'}</td>
+        <td><span class="whenbox sm"><b>${esc(v.pick.d)}</b><span>${I('pin', 11)}${esc(v.pick.p)}</span></span></td>
+        <td><span class="whenbox sm"><b>${esc(v.drop.d)}</b><span>${I('pin', 11)}${esc(v.drop.p)}</span></span></td>
+        <td><small style="color:#9AA3B5">${v.days} days</small><br><b style="color:#2E3A59">${eur(v.price)}</b></td>
+        <td>${FLAGS[v.country] || ''} ${esc(v.name)}</td>
+        <td><div class="act"><button type="button" data-res="${v.no}" aria-label="View">${I('eye', 15)}</button></div></td>
+      </tr>`).join('')}</tbody></table></div>
+  </div>${recCount(all.length)}`;
+}
+
+/* ---------------- MESSAGES ---------------- */
+function pageMessages() {
+  const all = MESSAGES.filter(m => !S.mq || (m.from + m.subject + m.body).toLowerCase().includes((S.mq || '').toLowerCase()));
+  return `
+  <div class="toolbar">
+    ${tbSel('mBox', 'Folder', S.mbox || 'Inbox', [['Inbox', 'Inbox'], ['Sent', 'Sent'], ['Archived', 'Archived']])}
+    ${tbSearch('mSearch', S.mq, 'Search messages …')}
+    <span class="tb-right"><span class="tb-page">1 - ${all.length} of ${MESSAGES.length}</span>
+      <button class="tb-btn" type="button" data-refresh aria-label="Refresh">${I('clock', 14)}</button></span>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h3>Messages</h3></div>
+    <div class="tbl-scroll"><table class="tbl">
+      <thead><tr><th>Supplier</th><th>Reserv.</th><th>Days</th><th>From</th><th>Subject</th><th style="text-align:right">Action</th></tr></thead>
+      <tbody>${all.map((m, i) => `<tr>
+        <td>${m.supplier ? supMark(m.supplier) : '<span style="color:#C3CBDA">—</span>'}</td>
+        <td>${m.no ? `<span class="respill">${esc(m.no)}</span>` : '<span style="color:#C3CBDA">—</span>'}</td>
+        <td>${m.days !== null ? `<span class="daysbadge t-${m.tone}">${m.days}</span>` : '<span class="daysbadge t-grey">–</span>'}</td>
+        <td style="min-width:190px"><b style="color:#2E3A59">${esc(m.from)}</b><br>
+          <small style="color:#9AA3B5">${esc(m.at)} · ${esc(m.ago)}</small></td>
+        <td style="max-width:520px"><b style="color:#2E3A59">${esc(m.subject)}</b>
+          ${m.attach ? `<span class="attach">${m.attach} attachment${m.attach > 1 ? 's' : ''}</span>` : ''}
+          ${m.body ? `<div class="msg-prev">${esc(m.body)}</div>` : ''}</td>
+        <td><div class="act"><button type="button" data-msg="${i}" aria-label="Open">${I('eye', 15)}</button></div></td>
+      </tr>`).join('')}</tbody></table></div>
+  </div>${recCount(all.length)}`;
+}
+
+function msgDrawer(i) {
+  const m = MESSAGES[Number(i)];
+  openDrawer(`
+    <div class="grid g2" style="gap:12px;margin-bottom:16px">
+      ${[['From', m.from], ['Received', m.at], ['Reservation', m.no || '—'], ['Supplier', m.supplier ? supName(m.supplier) : '—']]
+        .map(([k, v]) => `<div><div class="crop-lbl">${k}</div><div style="font-weight:600;color:#2E3A59">${esc(v)}</div></div>`).join('')}
+    </div>
+    <div class="crop-lbl">Message</div>
+    <div style="border:1px solid #E7EBF3;border-radius:6px;padding:14px;font-size:13.5px;line-height:1.65;color:#46536F">
+      ${esc(m.body) || '<span style="color:#9AA3B5">No preview available.</span>'}</div>
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+      <button class="btn btn-pri" type="button" onclick="toast('Replying is not wired up in the prototype.')">Reply</button>
+      <button class="btn btn-ghost" type="button" onclick="toast('Archived.')">Archive</button>
+    </div>`, { title:m.subject, sub:'Message', noSave:true });
+}
+
+/* ---------------- STATISTICS ---------------- */
+function pageStatistics() {
+  const view = S.statView || 'daily';
+  const day = S.bookings;
+  const tot = SALES.reduce((a, s) => a + s.total, 0);
+  const legend = [['#22A06B', '4,942.00', 'Confirmed'], ['#1F6BFF', '1,467.00', 'Cancelled'],
+                  ['#E8A317', '320.00', 'No show'], ['#C3CBDA', '0.00', 'Other']];
+  return `
+  <div class="toolbar">
+    ${tbSel('statView', 'View', view, [['daily', 'Daily sales'], ['supplier', 'Sales by supplier'], ['rates', 'Confirmation rates']])}
+    <span class="tb-right">
+      <button class="tb-btn" type="button" data-refresh>${I('chev', 14)} Previous day</button>
+      <button class="tb-btn" type="button" disabled>Next day ${I('chev', 14)}</button>
+      <button class="tb-btn" type="button" data-refresh>${I('cal', 14)} Today</button>
+    </span>
+  </div>
+  ${view === 'daily' ? `
+  <div class="panel">
+    <div class="panel-h" style="flex-wrap:wrap;gap:14px">
+      <h3>Daily sales for 25/08/2026</h3>
+      <span class="tot-pill">${eur(3155)} in total</span>
+      <span class="legend">${legend.map(l =>
+        `<span><i style="background:${l[0]}"></i>${l[1]} — ${l[2]}</span>`).join('')}</span>
+    </div>
+    <div class="tbl-scroll"><table class="tbl">
+      <thead><tr><th>Supplier</th><th>Reserv.</th><th>Status</th><th>Pick-up</th><th>Drop-off</th>
+        <th>Price</th><th>Customer</th><th>Activity</th></tr></thead>
+      <tbody>${RESERVATIONS.map(r => {
+        const st = RES_STATUS[r.status];
+        return `<tr>
+          <td>${supMark(r.supplier)}</td>
+          <td><span class="respill">${esc(r.no)}</span></td>
+          <td><span class="rstat" style="background:${st.chip};color:${st.text}"><i style="background:${st.spine}"></i>${r.status}</span></td>
+          <td><span class="whenbox sm"><b>${esc(r.pick.d)}</b><span>${I('pin', 11)}${esc(r.pick.p)}</span></span></td>
+          <td><span class="whenbox sm"><b>${esc(r.drop.d)}</b><span>${I('pin', 11)}${esc(r.drop.p)}</span></span></td>
+          <td><small style="color:#9AA3B5">${r.days} days</small><br><b style="color:#2E3A59">${eur(r.price)}</b></td>
+          <td>${FLAGS[r.country] || ''} ${esc(r.name)}</td>
+          <td><b style="color:#2E3A59">${esc(r.activity)}</b><br><small style="color:#9AA3B5">${esc(r.stamp)}</small></td>
+        </tr>`;
+      }).join('')}</tbody></table></div>
+  </div>${recCount(RESERVATIONS.length)}`
+  : view === 'supplier' ? `
+  <div class="panel">
+    <div class="panel-h"><h3>Sales by supplier for 2026</h3>
+      <span class="tot-pill" style="margin-left:auto">${eur(tot)}</span></div>
+    <div class="tbl-scroll"><table class="tbl month-tbl">
+      <thead><tr><th>Supplier</th><th>Area</th>${MONTHS.map(m => `<th style="text-align:right">${m}</th>`).join('')}
+        <th style="text-align:right">Total 2026</th></tr></thead>
+      <tbody>${SALES.map(s => `<tr>
+        <td>${supMark(s.id)}</td><td>${esc(s.area)}</td>
+        ${s.months.map(v => `<td style="text-align:right">${v ? v.toLocaleString('en-GB') : '<span style="color:#D2D9E4">0</span>'}</td>`).join('')}
+        <td class="tot-cell">${s.total.toLocaleString('en-GB')}</td></tr>`).join('')}</tbody></table></div>
+  </div>${recCount(SALES.length)}`
+  : `
+  <div class="panel">
+    <div class="panel-h"><h3>Confirmation rates for 2026 compared to 2025, 2024</h3></div>
+    <div class="tbl-scroll"><table class="tbl">
+      <thead><tr><th></th><th style="text-align:center">2026</th><th style="text-align:center">2025</th><th style="text-align:center">2024</th></tr></thead>
+      <tbody>${MONTHS.map((m, i) => {
+        const cell = (r, n, d) => i > 7 && r === 2026 ? '<span style="color:#C3CBDA">—</span>'
+          : `<b style="color:#2E3A59">${(n / d * 100).toFixed(2)} %</b><br><small style="color:#9AA3B5">(${n}/${d})</small>`;
+        const a = 600 + i * 30, b = 1000 + i * 90;
+        return `<tr><td><b style="color:#2E3A59">${m}</b></td>
+          <td style="text-align:center">${cell(2026, a + 40, b)}</td>
+          <td style="text-align:center">${cell(2025, a, b + 320)}</td>
+          <td style="text-align:center">${cell(2024, a - 30, b + 560)}</td></tr>`;
+      }).join('')}</tbody></table></div>
+  </div>`}`;
+}
+
+/* ---------------- FLEET CONFIGURATION LISTS ---------------- */
+function simpleList(title, head, rows, count) {
+  return `<div class="panel">
+    <div class="panel-h"><h3>${title}</h3>
+      <div class="r"><button class="add-btn" type="button" ${ro()}
+        onclick="toast('Creating records is not wired up in the prototype.')" aria-label="New">${I('plus', 17)}</button></div></div>
+    <div class="tbl-scroll"><table class="tbl">
+      <thead><tr>${head.map(h => `<th${h[1] ? ` style="text-align:${h[1]}"` : ''}>${h[0]}</th>`).join('')}</tr></thead>
+      <tbody>${rows}</tbody></table></div>
+  </div>${recCount(count)}`;
+}
+const rowAct = () => `<td><div class="act">
+  <button type="button" aria-label="Reorder" ${ro()}>${I('layers', 15)}</button>
+  <button type="button" aria-label="Edit" ${ro()}>${I('edit', 15)}</button></div></td>`;
+
+function pageCarAttributes() {
+  return simpleList('Car attributes', [['Name'], ['Type'], ['Action', 'right']],
+    CAR_ATTRIBUTES.map(a => `<tr>
+      <td><div class="nm"><span class="attr-ic">${I(a.icon === 'fuel' ? 'money' : a.icon === 'snow' ? 'check' : a.icon === 'radio' ? 'head' : a.icon, 16)}</span>
+        <b>${esc(a.name)}</b></div></td>
+      <td>${esc(a.type)}</td>${rowAct()}</tr>`).join(''), CAR_ATTRIBUTES.length);
+}
+
+function pageCarCategories() {
+  return simpleList('Car categories', [['Name'], ['Action', 'right']],
+    CAR_CATEGORIES.map(c => `<tr><td><b style="color:#2E3A59">${esc(c)}</b></td>${rowAct()}</tr>`).join(''), CAR_CATEGORIES.length);
+}
+
+function pageCarGroups() {
+  return simpleList('Car groups', [['Name'], ['Attributes'], ['Rules'], ['Cars', 'right'], ['Action', 'right']],
+    CAR_GROUPS.map(g => `<tr>
+      <td><b style="color:#2E3A59">${esc(g[0])}</b></td>
+      <td><span class="attrs">
+        <span class="chip">${esc(g[1])}</span><span class="chip">${esc(g[2])}</span>
+        <span class="am">${I('seat', 13)}${g[3]}</span><span class="am">${I('bag', 13)}${g[4]}</span><span class="am">${I('car', 13)}${g[5]}</span>
+      </span></td>
+      <td><span style="color:#8A93A8">${esc(g[6])}</span></td>
+      <td style="text-align:right"><b style="color:#2E3A59">${g[7]}</b></td>${rowAct()}</tr>`).join(''), CAR_GROUPS.length);
+}
+
+function pageExtras() {
+  return simpleList('Car extras', [['Name'], ['Max charge days'], ['Max charge amount'], ['Rule'], ['Action', 'right']],
+    CAR_EXTRAS.map(e => `<tr>
+      <td><div class="nm"><span class="attr-ic">${I(e.icon === 'snow' ? 'check' : e.icon, 16)}</span><b>${esc(e.name)}</b></div></td>
+      <td>${e.days || '<span style="color:#C3CBDA">—</span>'}</td>
+      <td>${e.amount || '<span style="color:#C3CBDA">—</span>'}</td>
+      <td><span style="color:#8A93A8;font-family:ui-monospace,monospace;font-size:12px">${esc(e.rule) || '—'}</span></td>
+      ${rowAct()}</tr>`).join(''), CAR_EXTRAS.length);
+}
+
+function pageInsurance() {
+  return simpleList('Insurance items', [['#'], ['Name'], ['Priceable', 'center'], ['Action', 'right']],
+    INSURANCE_ITEMS.map((it, i) => `<tr>
+      <td style="color:#9AA3B5;width:44px">${i + 1}</td>
+      <td><b style="color:#2E3A59;font-weight:500">${esc(it[0])}</b></td>
+      <td style="text-align:center">${it[1] ? `<span style="color:#22A06B">${I('check', 16)}</span>` : ''}</td>
+      ${rowAct()}</tr>`).join(''), INSURANCE_ITEMS.length);
+}
+
+function pagePricelists() {
+  return simpleList('Pricelists', [['Description'], ['Connected pricing areas'], ['Last synchronised'], ['Action', 'right']],
+    PRICELISTS.map(p => `<tr>
+      <td><b style="color:#2E3A59">${esc(p[0])}</b></td>
+      <td>${p[1] ? p[1] : '<span style="color:#C3CBDA">0</span>'}</td>
+      <td>${p[3] ? `<b style="color:#2E3A59;font-weight:500">${esc(p[2])}</b> <small style="color:#9AA3B5">· ${esc(p[3])}</small>`
+        : '<span style="color:#C3CBDA">Never</span>'}</td>
+      ${rowAct()}</tr>`).join(''), PRICELISTS.length);
+}
+</script>
+<script>
 /* ---------------- MEDIA LIBRARY ---------------- */
 function pageMedia() {
   const sel = S.draft.media.find(m => m.id === S.mediaSel) || S.draft.media[0];
@@ -1995,7 +2686,7 @@ function pageMedia() {
     <div class="panel"><div class="panel-h"><h3>Media library</h3>
       <div class="r"><select class="sel" id="mFolder" style="max-width:150px">
         <option value="">All folders</option>${folders.map(f => `<option ${S.mFolder === f ? 'selected' : ''}>${f}</option>`).join('')}</select>
-        <button class="btn btn-pri" type="button" id="mUploadBtn" ${ro()}>${I('upload', 15)} Upload</button></div></div>
+        <button class="add-btn" type="button" id="mUploadBtn" ${ro()} aria-label="Upload">${I('upload', 16)}</button></div></div>
       <div class="panel-b">
         <div class="dropzone" id="dropzone" style="margin-bottom:14px">
           ${I('upload', 22)}<div style="margin-top:6px"><b>Drop images here</b> or use Upload.</div>
@@ -2097,22 +2788,29 @@ function pageBranding() {
 /* ---------------- BOOKINGS ---------------- */
 function pageBookings() {
   const canSeePII = ['owner', 'admin', 'bookings'].includes(S.auth.role);
-  return `<div class="panel">
-    <div class="panel-h"><h3>Bookings</h3><div class="r">
-      <button class="btn btn-ghost" type="button" onclick="toast('Export queued — CSV with day-first dates.')">${I('down2', 15)} Export</button></div></div>
+  const all = S.bookings.filter(b => !S.bstat || b.status === S.bstat);
+  return `<div class="toolbar">
+    ${tbSel('bStat', 'Status', S.bstat || '', [['', 'All'], ['Confirmed', 'Confirmed'], ['On request', 'On request'], ['Cancelled', 'Cancelled']])}
+    ${tbSearch('bSearch', S.bq, 'Search bookings …')}
+    <span class="tb-right"><span class="tb-page">1 - ${all.length} of ${S.bookings.length}</span>
+      <button class="tb-btn" type="button" onclick="toast('Export queued — CSV with day-first dates.')" aria-label="Export">${I('down2', 14)}</button>
+      <button class="tb-btn" type="button" data-refresh aria-label="Refresh">${I('clock', 14)}</button></span>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h3>Bookings</h3></div>
     ${canSeePII ? '' : `<div style="padding:14px"><div class="alert a-warn">${I('shield', 17)}
       <div><b>Traveller details are hidden for your role</b>Names and agency contacts are restricted.</div></div></div>`}
     <div class="tbl-scroll"><table class="tbl">
       <thead><tr><th>Reference</th><th>Agency</th><th>Traveller</th><th>Vehicle</th><th>Pick-up</th>
-        <th>Net</th><th>Commission</th><th>Status</th><th></th></tr></thead>
-      <tbody>${S.bookings.map(b => `<tr>
+        <th>Net</th><th>Commission</th><th>Status</th><th style="text-align:right">Action</th></tr></thead>
+      <tbody>${all.filter(b => !S.bq || (b.ref + b.agency + b.customer + b.vehicle).toLowerCase().includes(S.bq.toLowerCase())).map(b => `<tr>
         <td><b>${b.ref}</b></td><td>${esc(b.agency)}</td>
         <td>${canSeePII ? esc(b.customer) : '<span style="color:var(--muted)">Restricted</span>'}</td>
         <td>${esc(b.vehicle)}</td><td>${b.pick}</td><td>${eur(b.net)}</td>
         <td style="color:var(--amber);font-weight:700">${eur(b.commission)}</td>
         <td><span class="badge ${b.status === 'Confirmed' ? 'b-live' : b.status === 'Cancelled' ? 'b-arch' : 'b-draft'}">${b.status}</span></td>
-        <td style="text-align:right"><button class="ord" type="button" data-book="${b.ref}">${I('eye', 14)}</button></td>
-      </tr>`).join('')}</tbody></table></div></div>`;
+        <td><div class="act"><button type="button" data-book="${b.ref}" aria-label="View">${I('eye', 15)}</button></div></td>
+      </tr>`).join('')}</tbody></table></div></div>${recCount(all.length)}`;
 }
 
 function bookingDrawer(ref) {
@@ -2196,7 +2894,7 @@ function pageSeo() {
         <td style="font-family:ui-monospace,monospace;font-size:12.5px;color:var(--muted)">${esc(r[2])}</td>
         <td>${esc(r[3])}</td>
         <td><span class="badge ${r[4] === 'published' ? 'b-live' : 'b-draft'}">${r[4] === 'published' ? 'Indexed' : 'No-index (draft)'}</span></td></tr>`).join('')}
-      </tbody></table></div></div>
+      </tbody></table></div>${recCount(rows.length)}</div>
     <div class="panel"><div class="panel-h"><h3>Generated files</h3></div><div class="panel-b"
       style="font-family:ui-monospace,monospace;font-size:12.5px;color:var(--muted);line-height:1.9">
       /sitemap.xml — ${S.draft.destinations.filter(d => d.status === 'published').length + S.draft.vehicles.filter(v => v.status === 'published').length + 9} URLs<br>
@@ -2223,7 +2921,7 @@ function pageUsers() {
         <tbody>${users.map(u => `<tr><td><b>${esc(u[0])}</b></td><td style="color:var(--muted)">${esc(u[1])}</td>
           <td><span class="badge ${u[2] === 'owner' ? 'b-blue' : 'b-arch'}">${ROLES[u[2]].label}</span></td>
           <td style="font-size:12.5px;color:var(--muted)">${ROLES[u[2]].pages === '*' ? 'All sections' : ROLES[u[2]].pages.length + ' sections'}${ROLES[u[2]].readonly ? ', read-only' : ''}</td>
-          <td>${u[3]}</td></tr>`).join('')}</tbody></table></div></div></div>`;
+          <td>${u[3]}</td></tr>`).join('')}</tbody></table></div></div>${recCount(users.length)}</div>`;
 }
 
 function pageSettings() {
@@ -2252,7 +2950,7 @@ function pagePages() {
         <td style="font-family:ui-monospace,monospace;font-size:12.5px;color:var(--muted)">/${p.toLowerCase().replace(/ /g, '-')}</td>
         <td>${3 + (i % 4)}</td>
         <td><span class="badge ${i === 4 ? 'b-draft' : 'b-live'}">${i === 4 ? 'Draft' : 'Published'}</span></td></tr>`).join('')}
-      </tbody></table></div></div>
+      </tbody></table></div>${recCount(pages.length)}</div>
     <div class="panel"><div class="panel-h"><h3>Available blocks</h3></div><div class="panel-b">
       <div style="display:flex;gap:8px;flex-wrap:wrap">${blocks.map(b => `<span class="chip" style="padding:7px 11px">${b}</span>`).join('')}</div>
       <div class="alert a-note" style="margin-top:14px">${I('clock', 16)}<div>
@@ -2278,9 +2976,12 @@ function adminPage() {
     <p>You are signed in as ${ROLES[S.auth.role].label}. This section is outside your permissions.</p></div></div>`;
   if (PAGE_TITLE[p] && PAGE_TITLE[p].soon) return pageStub(p);
   return ({ dashboard, homepage:pageHomepage, vehicles:pageVehicles, destinations:pageDestinations,
-    suppliers:pageSuppliers, media:pageMedia, branding:pageBranding, bookings:pageBookings,
+    suppliers:pageSuppliers, media:pageMedia, branding:pageBranding,
     navigation:pageNavigation, footer:pageNavigation, seo:pageSeo, users:pageUsers,
-    settings:pageSettings, pages:pagePages }[p] || dashboard)();
+    settings:pageSettings, pages:pagePages,
+    reservations:pageReservations, vouchers:pageVouchers, messages:pageMessages, statistics:pageStatistics,
+    cargroups:pageCarGroups, carattrs:pageCarAttributes, carcats:pageCarCategories,
+    extras:pageExtras, insurance:pageInsurance, pricelists:pagePricelists }[p] || dashboard)();
 }
 
 /* ---------------- drawer ---------------- */
@@ -2331,7 +3032,7 @@ function render() {
 }
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-goto],[data-quick],[data-move],[data-vis],[data-editsec],[data-veh],[data-vdup],[data-dest],[data-sup],[data-media],[data-book],[data-dev],[data-navmove],[data-navdel],[data-group],[data-gmove],[data-logo],#burger,#publishBtn,#sideToggle,#signout,#doSignin,#togglePrev,#mUploadBtn,#mReplace,#mHere,#navAdd,#sideScrim');
+  const t = e.target.closest('[data-goto],[data-quick],[data-move],[data-vis],[data-editsec],[data-veh],[data-vdup],[data-dest],[data-sup],[data-media],[data-book],[data-dev],[data-navmove],[data-navdel],[data-menu],[data-gmove],[data-logo],[data-page],[data-refresh],[data-res],[data-msg],[data-section],#burger,#menuScrim,#publishBtn,#sideToggle,#signout,#doSignin,#togglePrev,#mUploadBtn,#mReplace,#mHere,#navAdd,#sideScrim');
   if (!t) return;
   const d = t.dataset;
 
@@ -2344,11 +3045,8 @@ document.addEventListener('click', e => {
   if (t.id === 'burger') { S.mobileNav = !S.mobileNav; render(); return; }
   if (t.id === 'signout') { S.auth = null; render(); return; }
   if (t.id === 'publishBtn') return publishAll();
-  if (t.id === 'sideToggle') {
-    if (window.innerWidth <= 900) S.sideOpen = !S.sideOpen; else S.sideCollapsed = !S.sideCollapsed;
-    render(); return;
-  }
-  if (t.id === 'sideScrim') { S.sideOpen = false; render(); return; }
+  if (t.id === 'sideToggle') { S.sideOpen = !S.sideOpen; S.openMenu = null; render(); return; }
+  if (t.id === 'menuScrim') { S.openMenu = null; render(); return; }
   if (t.id === 'togglePrev') { S.previewDraft = !S.previewDraft; render(); return; }
   if (t.id === 'mUploadBtn') return document.getElementById('mFile').click();
   if (d.logo) { S.logoSlot = d.logo; document.getElementById('logoFile').click(); return; }
@@ -2356,19 +3054,24 @@ document.addEventListener('click', e => {
     ? 'Would replace this file in every place it is used.' : 'Would replace this file here only.');
   if (t.id === 'navAdd') { S.draft.nav.main.push({ label:'New link', href:'#/' }); touch('Added a navigation link'); render(); return; }
 
-  if (d.group) {
-    S.navClosed = S.navClosed || {};
-    S.navClosed[d.group] = !S.navClosed[d.group];
+  if (d.refresh !== undefined) { render(); toast('Refreshed.'); return; }
+  if (d.page) {
+    const [key, dir] = d.page.split(':');
+    S[key] = Math.max(0, (S[key] || 0) + Number(dir));
     S.keepScroll = window.scrollY; render(); return;
   }
+  if (d.section !== undefined) { S.openSection = Number(d.section); render(); return; }
+  if (d.res) return resDrawer(d.res);
+  if (d.msg !== undefined) return msgDrawer(d.msg);
+  if (d.menu) { S.openMenu = S.openMenu === d.menu ? null : d.menu; S.openSection = 0; render(); return; }
   if (d.gmove) {
     const [i, dir] = d.gmove.split(':').map(Number);
     const a = S.navOrder || (S.navOrder = GROUPS.slice());
     if (a[i + dir] === undefined) return;
     [a[i], a[i + dir]] = [a[i + dir], a[i]];
-    S.keepScroll = window.scrollY; render(); return;
+    S.openMenu = a[i + dir]; render(); return;
   }
-  if (d.goto) { S.adminPage = d.goto; S.sideOpen = false; if (S.view !== 'admin') location.hash = '#/admin'; else render(); return; }
+  if (d.goto) { S.adminPage = d.goto; S.sideOpen = false; S.openMenu = null; if (S.view !== 'admin') location.hash = '#/admin'; else render(); return; }
   if (d.dev) { S.device = d.dev; render(); return; }
 
   if (d.move) {
@@ -2430,10 +3133,26 @@ document.addEventListener('input', e => {
   if (el.id === 'hideSoon') { S.hideSoon = el.checked; render(); return; }
   if (el.id === 'bRad') { S.draft.branding.radius = Number(el.value); document.getElementById('radVal').textContent = el.value + 'px'; applyBranding(S.draft.branding); touch(null); }
   if (el.id === 'mAlt') { const m = S.draft.media.find(x => x.id === (S.mediaSel || S.draft.media[0].id)); m.alt = el.value; touch(null); }
-  if (el.id === 'vSearch') { S.vq = el.value; const b = document.getElementById('adminBody'); b.innerHTML = pageVehicles(); document.getElementById('vSearch').focus(); document.getElementById('vSearch').setSelectionRange(99, 99); }
+  if (el.id === 'rSearch') { S.rq = el.value; const b = document.getElementById('adminBody');
+    b.innerHTML = pageReservations(); const f = document.getElementById('rSearch'); f.focus(); f.setSelectionRange(99, 99); return; }
+  if (el.id === 'vchSearch') { S.vchq = el.value; const b = document.getElementById('adminBody');
+    b.innerHTML = pageVouchers(); const f = document.getElementById('vchSearch'); f.focus(); f.setSelectionRange(99, 99); return; }
+  if (el.id === 'mSearch') { S.mq = el.value; const b = document.getElementById('adminBody');
+    b.innerHTML = pageMessages(); const f = document.getElementById('mSearch'); f.focus(); f.setSelectionRange(99, 99); return; }
+  if (el.id === 'bSearch') { S.bq = el.value; const b = document.getElementById('adminBody');
+    b.innerHTML = pageBookings(); const f = document.getElementById('bSearch'); f.focus(); f.setSelectionRange(99, 99); return; }
+  if (el.id === 'vSearch') { S.vq = el.value; S.vPage = 0; const b = document.getElementById('adminBody'); b.innerHTML = pageVehicles(); document.getElementById('vSearch').focus(); document.getElementById('vSearch').setSelectionRange(99, 99); }
 });
 document.addEventListener('change', e => {
   const el = e.target;
+  if (el.id === 'rStat') { S.rstat = el.value; render(); return; }
+  if (el.id === 'vType') { S.vtype = el.value; render(); return; }
+  if (el.id === 'vStatus') { S.vstatus = el.value; render(); return; }
+  if (el.id === 'statView') { S.statView = el.value; render(); return; }
+  if (el.id === 'vStat') { S.vstat = el.value; S.vPage = 0; render(); return; }
+  if (el.id === 'dStat') { S.dstat = el.value; render(); return; }
+  if (el.id === 'bStat') { S.bstat = el.value; render(); return; }
+  if (el.id === 'perRows') { S.perPage = Number(el.value); S.vPage = 0; render(); return; }
   if (el.id === 'hideSoon') { S.hideSoon = el.checked; render(); return; }
   if (el.id === 'vCat') { S.vcat = el.value; render(); }
   if (el.id === 'mFolder') { S.mFolder = el.value; render(); }
@@ -2446,27 +3165,6 @@ document.addEventListener('change', e => {
   }
   if (el.name === 'role') document.querySelectorAll('.role-pick label').forEach(l => l.classList.toggle('on', l.contains(el)));
 });
-
-/* drag to reorder studio nav groups */
-let dragG = null;
-document.addEventListener('dragstart', e => {
-  const g = e.target.closest('.s-group'); if (!g) return;
-  dragG = Number(g.dataset.gidx); g.classList.add('dragging');
-});
-document.addEventListener('dragover', e => {
-  const g = e.target.closest('.s-group'); if (!g || dragG === null) return;
-  e.preventDefault(); g.classList.add('over');
-});
-document.addEventListener('dragleave', e => e.target.closest('.s-group')?.classList.remove('over'));
-document.addEventListener('drop', e => {
-  const g = e.target.closest('.s-group'); if (!g || dragG === null) return;
-  e.preventDefault();
-  const to = Number(g.dataset.gidx), a = S.navOrder || (S.navOrder = GROUPS.slice());
-  a.splice(to, 0, a.splice(dragG, 1)[0]); dragG = null;
-  render();
-});
-document.addEventListener('dragend', () => { dragG = null;
-  document.querySelectorAll('.s-group').forEach(g => g.classList.remove('dragging', 'over')); });
 
 /* drag to reorder homepage sections */
 let dragI = null;
@@ -2523,9 +3221,13 @@ document.addEventListener('change', e => {
   if (l && ASSETS['logo-mark']) l.href = ASSETS['logo-mark'];
 })();
 
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && S.openMenu) { S.openMenu = null; render(); }
+});
+
 /* routing */
 function route() {
-  S.mobileNav = false;
+  S.mobileNav = false; S.openMenu = null;
   const raw = location.hash || '#/';
   const [path, qs] = raw.split('?');
   const seg = path.replace(/^#\/?/, '').split('/').filter(Boolean);
