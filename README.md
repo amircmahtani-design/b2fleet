@@ -14,6 +14,7 @@ and label is rendered from one content document held in memory.
 |---|---|
 | `index.html` | The app. Loads images from `assets/`. Use this one in the repo. |
 | `standalone.html` | Identical app with every image inlined as base64. Open it straight off a phone with no server. |
+| `admin/index.html` | Makes `/admin` a real URL. Redirects into the studio route. |
 | `assets/` | Starter imagery, laid out as the asset-pack README describes. |
 | `docs/website-design-reference.png` | The visual reference the public homepage was built against. |
 
@@ -33,7 +34,13 @@ Routing is hash-based (`#/`, `#/admin`, `#/admin/vehicles`), so no redirect rule
 
 ## Using it
 
-Land on the public site. The **Studio** button, bottom right, goes behind the scenes.
+**Public routes** — every header, footer and card link goes somewhere real:
+
+`#/` home · `#/cars` search results with working filters and sorting · `#/cars/:id` vehicle detail
+`#/destinations/:slug` · `#/suppliers` · `#/bookings` · `#/help` · `#/page/:slug` for footer pages
+
+**Studio** — the button bottom right of the public site, or `/admin` directly, or `#/admin/vehicles`,
+`#/admin/media`, `#/admin/branding`.
 
 Sign-in is fake — any email and password work. Pick a role to see permissions change:
 
@@ -43,6 +50,10 @@ Sign-in is fake — any email and password work. Pick a role to see permissions 
 | Content editor | Content and marketplace, no users or settings |
 | Booking manager | Dashboard and bookings only |
 | Read-only viewer | Everything, all editing disabled |
+
+**Sidebar** — group headers collapse on click. Hover a header for arrows, or drag a whole group, to reorder
+them so what you use most sits at the top. **Hide unbuilt** strips the SOON sections out of the list.
+Order and collapse state are in memory only and reset on refresh.
 
 **Worth trying**
 
