@@ -39,6 +39,9 @@ Routing is hash-based (`#/`, `#/admin`, `#/admin/vehicles`), so no redirect rule
 `#/` home · `#/cars` search results with working filters and sorting · `#/cars/:id` vehicle detail
 `#/destinations/:slug` · `#/suppliers` · `#/bookings` · `#/help` · `#/page/:slug` for footer pages
 
+The header nav is editable under Studio > Navigation. Items are matched to routes for the active-state
+underline, so renaming a link keeps its highlight but pointing it somewhere new will not.
+
 **Studio** — the button bottom right of the public site, or `/admin` directly, or `#/admin/vehicles`,
 `#/admin/media`, `#/admin/branding`.
 
@@ -88,9 +91,35 @@ Also absent, deliberately:
 - **Server-side image derivatives.** Cropping here is CSS on the original. Production needs generated WebP/AVIF variants at several widths.
 - **Transactional email, PDF vouchers, payments, revision history, scheduled publishing.**
 
+## Swapping the logo
+
+The logo is three files, referenced by name. Nothing about it is hard-coded.
+
+| File | Used by |
+|---|---|
+| `assets/branding/logo-full.png` | Header, sign-in, anything on a light background |
+| `assets/branding/logo-full-dark.png` | Footer, closing band, anything on navy |
+| `assets/branding/logo-mark.png` | Square contexts on light backgrounds, favicon |
+| `assets/branding/logo-mark-dark.png` | Studio sidebar, laptop mock, square contexts on navy |
+
+These were cut from `logo-source-sheet.png`, which is the original supplied artwork kept for reference.
+The dark lockup was derived by remapping navy to white and lifting the blue for contrast against `#0B2545`.
+
+**To replace it permanently:** drop your files into `assets/branding/` using those exact names. Nothing else
+changes — not `index.html`, not the branding settings. SVG, PNG and WebP all work.
+
+**Still worth doing:** the supplied artwork is raster. At header size it is fine, but it will soften on
+retina displays and cannot be recoloured. Before launch, have the mark redrawn as true vectors.
+
+**To try one before committing:** Studio → Branding → Replace. It swaps live so you can judge it in place,
+but only for that browser session.
+
+If your logo is a single lockup and you want it on both light and dark, supply the same file twice under
+both names. If it only reads on one, that is worth knowing before you print anything.
+
 ## Assets
 
-The imagery is AI-generated starter material. The vehicle renders carry recognisable BMW, Volvo and Fiat design
+The photography is AI-generated starter material. The vehicle renders carry recognisable BMW, Volvo and Fiat design
 cues, and `assets/branding/logo-concept-v2.png` is a raster concept, not an approved identity. Both need
 resolving before anything commercial. The logo currently drawn in the app is a coded placeholder so the layout
 is truthful — it is not the final mark.
