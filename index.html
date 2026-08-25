@@ -331,10 +331,14 @@ h1,h2,h3,h4{margin:0;letter-spacing:-.025em;font-weight:800;line-height:1.1}
   .site-head>.wrap{gap:12px}
   .to-studio{bottom:calc(80px + env(safe-area-inset-bottom));padding:9px 13px;font-size:13.5px}
   .sec-head h2{font-size:21px;line-height:1.15}
-  .hero-band{height:clamp(360px,88vw,430px)}
-  .hero-scrim{background:linear-gradient(168deg,rgba(11,37,69,.94) 0%,rgba(11,37,69,.78) 46%,rgba(11,37,69,.34) 78%),
-    linear-gradient(to top,rgba(11,37,69,.7) 0%,transparent 40%)}
-  .hero-tools{margin-top:-70px}
+  /* taller band so the whole vehicle fits, and the card clears the wheels
+     with a strip of road between them instead of overlapping */
+  .hero-band{height:clamp(400px,108vw,460px)}
+  .hero-scrim{background:linear-gradient(168deg,rgba(11,37,69,.93) 0%,rgba(11,37,69,.74) 42%,rgba(11,37,69,.20) 70%),
+    linear-gradient(to top,rgba(11,37,69,.42) 0%,transparent 26%)}
+  .hero-tools{margin-top:16px}
+  .hero-copy{padding-top:34px}
+  .hero p.sub{margin-top:16px}
   .trust{gap:16px 22px;font-size:13px}
   .platform{grid-template-columns:1fr;padding:22px}
   .veh-grid{grid-template-columns:1fr}
